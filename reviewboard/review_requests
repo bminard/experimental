@@ -1,0 +1,109 @@
+#!/usr/bin/env python
+
+""" Identify all reviews requests. Optionally, limit review requests by date range. """
+
+from dateutil.parser import parse
+import getopt
+import os
+from rbtools.api.client import RBClient
+from rbtools.api.errors import ServerInterfaceError
+import sys
+
+
+def usage():
+    basename = os.path.basename(os.path.splitext(sys.argv[0])[0])
+    print """
+{} -- collect reviews using the Review Board instance identified by the URL.
+
+SYOPSIS
+
+  {} <options> URL
+
+Review Limiting
+
+  -f <date>, --time-added-from=<date>
+    The earliest date/time the review request could be added.
+
+  -t <date>, --time-added-to=<date>
+    The date/time that all review requests must be added before.
+""".format(basename, basename)
+
+
+def error(msg):
+    """ Return a consistent error message. """
+    print >> sys.stderr, sys.argv[0] + ': {}. Use -h for help.'.format(msg)
+
+
+def process_command_line():
+    """ Process provided command-line options. """
+
+    # FIXME: time = None works but the urls containing None may rely on a server
+    # bug. The server requires a valid date/time format. See
+    # https://www.reviewboard.org/docs/manual/dev/webapi/2.0/glossary/#term-date-time-format.
+    time_added_to = None
+    time_added_from = None
+  
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "hf:t:", [ "help", "time-added-to=", "time-added-from=" ])
+  
+    except getopt.GetoptError as err:
+        error(err)
+        sys.exit(1)
+  
+    for o, a in opts:
+        if o in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif o in ("-f", "--time-added-from"):
+            time_added_from = parse(a, fuzzy = True)
+        elif o in ("-t", "--time-added-to"):
+            time_added_to = parse(a, fuzzy = True)
+        else:
+            assert False, "unrecognized option"
+
+    return time_added_from, time_added_to
+
+
+if __name__ == "__main__":
+    time_from, time_to = process_command_line()
+
+    client = RBClient(sys.argv[len(sys.argv) - 1])
+    try:
+        root = client.get_root()
+
+    except ServerInterfaceError as err:
+        error(err)
+        sys.exit(1)
+
+    at_most = 25 # enforce max results to enable cleaner presentation layer logic
+
+    if None == time_from:
+        if None == time_to:
+            requests = root.get_review_requests(max_results=at_most)
+        else:
+            requests = root.get_review_requests(max_results=at_most, time_added_to=time_to)
+    elif None == time_to:
+        requests = root.get_review_requests(max_results=at_most, time_added_from=time_from)
+    else:
+        requests = root.get_review_requests(max_results=at_most, time_added_from=time_from, time_added_to=time_to)
+
+    total_results = requests.total_results
+    counter = 0
+    while True:
+        for r in range(0, min(at_most, total_results - counter)):
+            counter += 1
+            print requests[r].absolute_url
+            for diff in requests[r].get_diffs():
+                print '\tDiff: {}'.format(diff.id)
+                for file in  diff.get_files():
+                    print '\t\t', file.source_file
+
+        done = True
+        for link in requests.links.iteritems():
+            if 'next' ==  link[0]:
+                done = False
+                requests = requests.get_next()
+        if done:
+            break
+
+    assert counter == total_results, "expected {}, got {}".format(total_results, counter)
