@@ -1,5 +1,5 @@
 # experimental
 Code snippets and exploratory code into different interests.
 
-# vim
-Vim configuration.
+# review board
+A collection of code used in my exploration of the Review Board Web API.
