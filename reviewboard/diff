@@ -1,0 +1,24 @@
+import requests
+
+url = 'https://reviews.reviewboard.org'
+
+rsp = requests.get(url + '/api/')
+root = rsp.json()
+
+review_requests = requests.get(root['links']['review_requests']['href'])
+
+# first review request in the list of review requests
+review_request = review_requests.json()['review_requests'][0]
+review_request_id = review_request['id']
+
+# first diff in the list of diffs
+rsp = requests.get(review_request['links']['diffs']['href'])
+diffs = rsp.json()
+diff_revision = diffs['diffs'][0]['revision']
+
+# use the template to create the uri
+uri =  root['uri_templates']['diff'].format(review_request_id=review_request_id, diff_revision=diff_revision)
+rsp = requests.get(uri)
+diff = rsp.json()
+
+print diff['diff']['links']['self']['href']
