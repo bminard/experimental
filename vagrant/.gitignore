@@ -1,4 +1,5 @@
 *.box
+*.timestamp
 output-virtualbox-iso
 packer
 packer_cache
