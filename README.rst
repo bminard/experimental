@@ -1,11 +1,11 @@
 # experimental
-Code snippets and exploratory code into different interests.
+Code snippets for exploring different interests.
 
 ## reviewboard
 A collection of code used in my exploration of the Review Board Web API.
 
 ## vagrant
-A collection of Packer_ and Vagrant_ configuration files.
+A collection of `Packer`_ and `Vagrant`_ configuration files.
 
 .. _Packer: https://www.packer.io
 .. _Vagrant: https://www.vagrantup.com
