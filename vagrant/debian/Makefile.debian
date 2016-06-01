@@ -1,0 +1,55 @@
+#-------------------------------------------------------------------------------
+# debian: Makefile.debian
+#
+# Use this make file to construct a Vagrant box for a Debian release.
+#-------------------------------------------------------------------------------
+ifndef CODE_NAME
+$(error Specify a release code name (e.g., wheezy))
+endif
+
+
+ifndef VERSION
+$(error Specify a release version number (e.g., 8.4.0))
+endif
+
+
+TEMPLATE=debian-${CODE_NAME}
+TIMESTAMP=timestamp.${TEMPLATE}
+.PHONY: check
+check: ${TIMESTAMP}
+${TIMESTAMP}: ${TEMPLATE}
+	packer validate $< 2>&1 > /dev/null && touch $@
+
+
+.PHONY: add-boxes
+add-boxes: create-boxes
+
+
+BUILDERS=$(shell packer inspect ${TEMPLATE} | sed -ne '/^$$/d' -Ee 's/[[:space:]]*//g' -Ee '/^Builders:/,/^[[:alnum:]]+:/p' | sed -e '/^.*:/d')
+.PHONY: create-boxes
+create-boxes: base-box-dir ${BUILDERS}
+
+
+# Directory layout required by vagrant-metadata.
+.PHONY: base-box-dir
+base-box-dir:
+	-mkdir -p ${CODE_NAME}/${VERSION}/{${BUILDERS:% =%,}}
+
+
+VIRTUALBOX_BOX=debian-${VERSION}-amd64_virtualbox.box
+.PHONY: virtualbox-iso
+virtualbox-iso: ${VIRTUALBOX_BOX}
+${VIRTUALBOX_BOX}: ${TIMESTAMP} http/preseed_${CODE_NAME}.cfg scripts/*.sh
+	packer build ${TEMPLATE}
+
+
+# Remove files that take a long time to create.
+.PHONY: clean
+clean: mostlyclean
+	-rm -fr ${VIRTUALBOX_BOX} ${CODE_NAME}
+
+
+# Remove files that are recreated quickly.
+.PHONY: mostlyclean
+mostlyclean:
+	-rm ${TIMESTAMP}
