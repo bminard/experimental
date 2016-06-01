@@ -1,25 +1,26 @@
 Experiments with Vagrant and Packer
 ===================================
 
-This directory contains experimental changes `Pierre Mavro`_'s work on `packer-debian`_.
-These changes respect Pierre's `LICENCE`.
+This repo contains updates to `Pierre Mavro`_'s work on `packer-debian`_
+and to `Gavin Burris`_' work on CentOS 7.
 
-I did not retain the original files. Yeah, I made a mess.
+The objective of these changes was to enhance my understaind of Packer and
+Vagrant and their use in supporting virtual machine deployment.
 
-This repo introduces the following changes.
+This repo introduces the following changes to Pierre's and Gavin's work.
 
-   - supports only Debian 8.4.0. Major change is the specification of the Grub2 MBR device in the preseed configuration file.
-   - a Makefile to generate a Virtual Box file.
-   - introduction of `scripts/puppet.sh` and modification to permit the use of `facter`_.
-     Facter is in `packer-debian`_.
-     It is abandoned or a WIP.
+   - Make files to generate a Debian Virtual Box file.
+     Pierre's work supports both Jessie and Wheezy.
+   - Make files to generate a CentOS Virtual Box file.
+     Gavin's work supports CentOS-7.0-1406.
+   - Support for vagrant-metadata, a metadata.json generator.
 
-My objectives for this experiement aren't to create a Debian Virtual Box image.
-I want to understand how Vagrant and Packer work together to determine if they are useful for my deployment of virtual machines.
-
-Thank's to Pierre for providing making packer-debian public.
+Thanks to Pierre for providing making packer-debian public.
 It provided an excellent start to my investigation.
 
-.. _facter: https://docs.puppet.com/facter/latest/
-.. _packer-debian: https://github.com/deimosfr/packer-debian
+Thanks to Gavin Burris for publishing information on using Vagrant and Packer on CentOS.
+Gavin's work is Copyright (c) 2016 The Wharton School, The University of Pennsylvania.
+
+.. _Gavin Burris: https://research-it.wharton.upenn.edu/news/minimal-linux-with-packer-and-vagrant/
 .. _Pierre Mavro: https://github.com/deimosfr
+.. _packer-debian: https://github.com/deimosfr/packer-debian
