@@ -13,7 +13,7 @@ $(error Specify a release version number (e.g., 8.4.0))
 endif
 
 
-TEMPLATE=debian-${CODE_NAME}
+TEMPLATE=debian-${CODE_NAME}.json
 TIMESTAMP=timestamp.${TEMPLATE}
 .PHONY: check
 check: ${TIMESTAMP}

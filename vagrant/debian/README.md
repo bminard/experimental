@@ -19,7 +19,7 @@ packer build debian-<version>
 ```
 So for example:
 ```
-packer build debian-jessie
+packer build debian-jessie.json
 ```
 
 That's it :-)
