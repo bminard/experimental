@@ -1,6 +1,7 @@
 {
   "variables": {
-    "debian_version": "7.9.0"
+    "os_version": "7.9.0",
+    "installer_conf": "preseed_wheezy.cfg"
   },
   "builders": [
     {
@@ -8,7 +9,7 @@
       "boot_command": [
         "<esc><wait>",
         "install <wait>",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_wheezy.cfg <wait>",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `installer_conf`}} <wait>",
         "debian-installer=en_US <wait>",
         "auto <wait>",
         "locale=en_US <wait>",
@@ -30,14 +31,14 @@
       "http_directory": "http",
       "iso_checksum": "b6a19b4cf1d046e5eba1ae235a94824bca5a7c8f092a28216396c9d585ef709d",
       "iso_checksum_type": "sha256",
-      "iso_url": "http://cdimage.debian.org/cdimage/archive/{{user `debian_version`}}/amd64/iso-cd/debian-{{user `debian_version`}}-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.org/cdimage/archive/{{user `os_version`}}/amd64/iso-cd/debian-{{user `os_version`}}-amd64-netinst.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_wait_timeout": "600s",
       "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -hP now",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "debian-{{user `debian_version`}}-amd64",
+      "vm_name": "debian-{{user `os_version`}}-amd64",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--audio", "none"],
         [ "modifyvm", "{{.Name}}", "--cpus", "1" ],
@@ -50,7 +51,7 @@
     {
       "type": "vagrant",
       "compression_level": "9",
-      "output": "debian-{{user `debian_version`}}-amd64_{{.Provider}}.box"
+      "output": "debian-{{user `os_version`}}-amd64_{{.Provider}}.box"
     }
   ],
   "provisioners": [

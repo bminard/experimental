@@ -1,14 +1,15 @@
 {
-    "variables": {
-        "debian_version": "8.4.0"
-    },
+  "variables": {
+    "os_version": "8.4.0",
+    "installer_conf": "preseed_jessie.cfg"
+  },
   "builders": [
     {
       "type": "virtualbox-iso",
       "boot_command": [
         "<esc><wait>",
         "install <wait>",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_jessie.cfg <wait>",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `installer_conf`}} <wait>",
         "debian-installer=en_CA <wait>",
         "auto <wait>",
         "locale=en_CA <wait>",
@@ -29,7 +30,7 @@
       "http_directory": "http",
       "iso_checksum": "7a6b418e6a4ee3ca75dda04d79ed96c9e2c33bb0c703ca7e40c6374ab4590748",
       "iso_checksum_type": "sha256",
-      "iso_url": "http://cdimage.debian.org/debian-cd/{{user `debian_version`}}/amd64/iso-cd/debian-{{user `debian_version`}}-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.org/debian-cd/{{user `os_version`}}/amd64/iso-cd/debian-{{user `os_version`}}-amd64-netinst.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -37,7 +38,7 @@
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/shutdown -hP now",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "debian-{{user `debian_version`}}-amd64",
+      "vm_name": "debian-{{user `os_version`}}-amd64",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "512" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
@@ -48,7 +49,7 @@
     {
       "type": "vagrant",
       "compression_level": "9",
-      "output": "debian-{{user `debian_version`}}-amd64_{{.Provider}}.box"
+      "output": "debian-{{user `os_version`}}-amd64_{{.Provider}}.box"
     }
   ],
   "provisioners": [

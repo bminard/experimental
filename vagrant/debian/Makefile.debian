@@ -3,21 +3,15 @@
 #
 # Use this make file to construct a Vagrant box for a Debian release.
 #-------------------------------------------------------------------------------
-ifndef CODE_NAME
-$(error Specify a release code name (e.g., wheezy))
+ifndef PACKER_TEMPLATE
+$(error Specify a JSON template usable by Packer.)
 endif
 
 
-ifndef VERSION
-$(error Specify a release version number (e.g., 8.4.0))
-endif
-
-
-TEMPLATE=debian-${CODE_NAME}.json
-TIMESTAMP=timestamp.${TEMPLATE}
+TIMESTAMP=timestamp.${PACKER_TEMPLATE}
 .PHONY: check
 check: ${TIMESTAMP}
-${TIMESTAMP}: ${TEMPLATE}
+${TIMESTAMP}: ${PACKER_TEMPLATE}
 	packer validate $< 2>&1 > /dev/null && touch $@
 
 
@@ -25,28 +19,24 @@ ${TIMESTAMP}: ${TEMPLATE}
 add-boxes: create-boxes
 
 
-BUILDERS=$(shell packer inspect ${TEMPLATE} | sed -ne '/^$$/d' -Ee 's/[[:space:]]*//g' -Ee '/^Builders:/,/^[[:alnum:]]+:/p' | sed -e '/^.*:/d')
+BUILDER=$(shell packer inspect ${PACKER_TEMPLATE} | sed -ne '/^$$/d' -Ee 's/[[:space:]]*//g' -Ee '/^Builders:/,/^[[:alnum:]]+:/p' | sed -e '/^.*:/d')
 .PHONY: create-boxes
-create-boxes: base-box-dir ${BUILDERS}
+create-boxes: ${BUILDER}
 
 
-# Directory layout required by vagrant-metadata.
-.PHONY: base-box-dir
-base-box-dir:
-	-mkdir -p ${CODE_NAME}/${VERSION}/{${BUILDERS:% =%,}}
-
-
-VIRTUALBOX_BOX=debian-${VERSION}-amd64_virtualbox.box
+OS_VERSION=$(shell packer inspect ${PACKER_TEMPLATE} | awk '/os_version/ { print $$3 }')
+INSTALLER_CONF=$(shell packer inspect ${PACKER_TEMPLATE} | awk '/installer_conf/ { print $$3 }')
+VIRTUALBOX_BOX=debian-${OS_VERSION}-amd64_virtualbox.box
 .PHONY: virtualbox-iso
 virtualbox-iso: ${VIRTUALBOX_BOX}
-${VIRTUALBOX_BOX}: ${TIMESTAMP} http/preseed_${CODE_NAME}.cfg scripts/*.sh
-	packer build ${TEMPLATE}
+${VIRTUALBOX_BOX}: ${PACKER_TEMPLATE} http/${INSTALLER_CONF} scripts/*.sh
+	packer build ${PACKER_TEMPLATE}
 
 
 # Remove files that take a long time to create.
 .PHONY: clean
 clean: mostlyclean
-	-rm -fr ${VIRTUALBOX_BOX} ${CODE_NAME}
+	-rm -fr ${VIRTUALBOX_BOX}
 
 
 # Remove files that are recreated quickly.
