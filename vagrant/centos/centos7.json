@@ -10,7 +10,7 @@
       "iso_checksum_type": "sha256",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "600s",
+      "ssh_wait_timeout": "1000s",
       "vm_name": "centos70",
       "http_directory": "./",
       "boot_wait": "10s",
