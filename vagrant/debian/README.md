@@ -29,7 +29,5 @@ PACKER_TEMPLATE=debian-jessie.json make -f Makefile.debian add-boxes
 
 That's it :-)
 
-You can find the result on the vagrantcloud here: https://vagrantcloud.com/deimosfr/debian-wheezy
-
 To manage multiple versions of Debian update the ``Makefile`` provided in this directory.
 To update the ``Makefile``, add the name of the Packer template (e.g., "debian-version.json") to each makefile target.
