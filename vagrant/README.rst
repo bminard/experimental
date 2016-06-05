@@ -28,9 +28,10 @@ Gavin's work is Copyright (c) 2016 The Wharton School, The University of Pennsyl
 Using
 -----
 
-First, update your environment::
+First, update your environment.
+Run `exportenv.sh` in the project's root directory::
 
-        > source exportenv.sh
+        > source exportenv.sh `pwd`
 
 To build every Vagrant box::
 
