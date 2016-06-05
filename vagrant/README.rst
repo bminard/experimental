@@ -24,3 +24,18 @@ Gavin's work is Copyright (c) 2016 The Wharton School, The University of Pennsyl
 .. _Gavin Burris: https://research-it.wharton.upenn.edu/news/minimal-linux-with-packer-and-vagrant/
 .. _Pierre Mavro: https://github.com/deimosfr
 .. _packer-debian: https://github.com/deimosfr/packer-debian
+
+Using
+-----
+
+First, update your environment::
+
+        > source exportenv.sh
+
+To build every Vagrant box::
+
+        > make all
+
+To build every Vagrant box for a specified distribution (e.g., Debian)::
+
+        > cd debian; make all

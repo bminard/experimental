@@ -1,0 +1,28 @@
+#-------------------------------------------------------------------------------
+# conf: Makefile.packer
+#
+# Common make file recipes directed at Packer.
+#-------------------------------------------------------------------------------
+ifndef PACKER_TEMPLATE
+$(error Specify a JSON template usable by Packer.)
+endif
+
+
+TIMESTAMP=timestamp.${PACKER_TEMPLATE}
+.PHONY: check
+check: ${TIMESTAMP}
+${TIMESTAMP}: ${PACKER_TEMPLATE}
+	packer validate $< && touch $@
+
+
+.PHONY: add-boxes
+add-boxes: create-boxes
+
+
+BUILDER=$(shell packer inspect ${PACKER_TEMPLATE} | sed -ne '/^$$/d' -Ee 's/[[:space:]]*//g' -Ee '/^Builders:/,/^[[:alnum:]]+:/p' | sed -e '/^.*:/d')
+.PHONY: create-boxes
+create-boxes: ${BUILDER}
+
+
+OS_VERSION=$(shell packer inspect ${PACKER_TEMPLATE} | awk '/os_version/ { print $$3 }')
+INSTALLER_CONF=$(shell packer inspect ${PACKER_TEMPLATE} | awk '/installer_conf/ { print $$3 }')
