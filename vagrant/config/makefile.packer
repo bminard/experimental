@@ -12,6 +12,7 @@ TIMESTAMP=timestamp.${PACKER_TEMPLATE}
 .PHONY: check
 check: ${TIMESTAMP}
 ${TIMESTAMP}: ${PACKER_TEMPLATE}
+	@packer version
 	packer validate $< && touch $@
 
 
