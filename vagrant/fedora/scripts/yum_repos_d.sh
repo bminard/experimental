@@ -6,13 +6,14 @@
 
 
 readonly FEDORA_REPOSITORY=/etc/yum.repos.d/fedora.repo
+readonly FEDORA_UPDATES_REPOSITORY=/etc/yum.repos.d/fedora-updates.repo
+readonly FEDORA_UPDATES_TESTING_REPOSITORY=/etc/yum.repos.d/fedora-updates-testing.repo
 
 
 cat<<_EOF > ${FEDORA_REPOSITORY}
 [fedora]
 name=Fedora \$releasever - \$basearch
-baseurl=https://dl.fedoraproject.org/pub/archive/fedora/linux/releases/\$releasever/Everything/\$basearch/os/
-mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-\$releasever&arch=\$basearch
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/releases/\$releasever/Everything/\$basearch/os/
 enabled=1
 metadata_expire=7d
 gpgcheck=1
@@ -21,9 +22,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
 [fedora-debuginfo]
 name=Fedora \$releasever - \$basearch - Debug
 failovermethod=priority
-baseurl=https://dl.fedoraproject.org/pub/archive/fedora/linux/releases/\$releasever/Everything/\$basearch/debug/
-mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-\$releasever&arch=\$basearch
-mirrorlist=http://mirrors.fedoraproject.org/metalink?repo=fedora-debug-\$releasever&arch=\$basearch
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/releases/\$releasever/Everything/\$basearch/debug/
 enabled=0
 metadata_expire=7d
 gpgcheck=1
@@ -32,8 +31,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
 [fedora-source]
 name=Fedora \$releasever - Source
 failovermethod=priority
-baseurl=https://dl.fedoraproject.org/pub/archive/fedora/linux/releases/\$releasever/Everything/\$basearch/source/SRPMS/
-mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-source-\$releasever&arch=\$basearch
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/releases/\$releasever/Everything/\$basearch/source/SRPMS/
 enabled=0
 metadata_expire=7d
 gpgcheck=1
@@ -41,5 +39,53 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
 _EOF
 
 
-chown root:root ${FEDORA_REPOSITORY}
-chmod u+rw,og+r,uog-x ${FEDORA_REPOSITORY}
+cat<<_EOF > ${FEDORA_UPDATES_REPOSITORY}
+[updates]
+name=Fedora \$releasever - \$basearch - Updates
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/updates/\$releasever/\$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
+
+[updates-debuginfo]
+name=Fedora \$releasever - \$basearch - Updates - Debug
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/updates/\$releasever/\$basearch/debug/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
+
+[updates-source]
+name=Fedora \$releasever - Updates Source
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/updates/\$releasever/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
+_EOF
+
+
+cat<<_EOF > ${FEDORA_UPDATES_TESTING_REPOSITORY}
+[updates-testing]
+name=Fedora \$releasever - \$basearch - Test Updates
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/updates/testing/\$releasever/\$basearch/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
+
+[updates-testing-debuginfo]
+name=Fedora \$releasever - \$basearch - Test Updates Debug
+baseurl=http://dl.fedoraproject.org/pub/archive/fedora/linux/updates/testing/\$releasever/\$basearch/debug/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
+
+[updates-testing-source]
+name=Fedora \$releasever - Test Updates Source
+baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/testing/\$releasever/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
+_EOF
+
+
+chown root:root ${FEDORA_REPOSITORY} ${FEDORA_UPDATES_REPOSITORY} ${FEDORA_UPDATES_TESTING_REPOSITORY} \
+	&& chmod u+rw,og+r,uog-x ${FEDORA_REPOSITORY} ${FEDORA_UPDATES_REPOSITORY} ${FEDORA_UPDATES_TESTING_REPOSITORY}
