@@ -23,10 +23,9 @@ It provided an excellent start to my investigation.
 Thanks to Gavin Burris for publishing information on using Vagrant and Packer on CentOS.
 Gavin's work is Copyright (c) 2016 The Wharton School, The University of Pennsylvania.
 
-.. _Boxcutter: https://github.com/boxcutter
-.. _Gavin Burris: https://research-it.wharton.upenn.edu/news/minimal-linux-with-packer-and-vagrant/
-.. _Pierre Mavro: https://github.com/deimosfr
-.. _packer-debian: https://github.com/deimosfr/packer-debian
+This repo introduces support for Fedora.
+No `Boxcutter`_ code is contained herein.
+`Boxcutter`_ and `Boxcutter Fedora`_ did influence the my implementation.
 
 Using
 -----
@@ -43,3 +42,9 @@ To build every Vagrant box::
 To build every Vagrant box for a specified distribution (e.g., Debian)::
 
         > cd debian; make all
+
+.. _Boxcutter Fedora: https://github.com/boxcutter/fedora
+.. _Boxcutter: https://github.com/boxcutter
+.. _Gavin Burris: https://research-it.wharton.upenn.edu/news/minimal-linux-with-packer-and-vagrant/
+.. _Pierre Mavro: https://github.com/deimosfr
+.. _packer-debian: https://github.com/deimosfr/packer-debian
