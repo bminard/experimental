@@ -3,14 +3,17 @@
 #
 # Use this make file to construct a Vagrant box for a Debian release.
 #-------------------------------------------------------------------------------
+PACKER_TEMPLATE?=debian.json
+
+
 include makefile.packer
 
 
 VIRTUALBOX_BOX=debian-${OS_VERSION}-amd64_virtualbox.box
 .PHONY: virtualbox-iso
 virtualbox-iso: ${VIRTUALBOX_BOX}
-${VIRTUALBOX_BOX}: ${PACKER_TEMPLATE} http/${INSTALLER_CONF} scripts/*.sh
-	packer build ${PACKER_TEMPLATE}
+${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} http/${INSTALLER_CONF} scripts/*.sh
+	packer build -var-file=${PACKER_VARS} ${PACKER_TEMPLATE}
 
 
 # Remove files that take a long time to create.

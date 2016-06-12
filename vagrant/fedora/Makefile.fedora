@@ -3,15 +3,18 @@
 #
 # Use this make file to construct a Vagrant box for a Fedora release.
 #-------------------------------------------------------------------------------
+PACKER_TEMPLATE?=fedora.json
+
+
 include makefile.packer
 
 
 VIRTUALBOX_BOX=fedora-${OS_VERSION}-i386_virtualbox.box
 .PHONY: virtualbox-iso
 virtualbox-iso: ${VIRTUALBOX_BOX}
-${VIRTUALBOX_BOX}: ${PACKER_TEMPLATE} http/${INSTALLER_CONF} scripts/yum_repos_d.sh \
+${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} http/${INSTALLER_CONF} scripts/yum_repos_d.sh \
 	scripts/yum_install.sh
-	packer build ${PACKER_TEMPLATE}
+	packer build -var-file=${PACKER_VARS} ${PACKER_TEMPLATE}
 
 
 # Remove files that take a long time to create.

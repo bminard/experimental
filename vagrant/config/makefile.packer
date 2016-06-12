@@ -8,12 +8,17 @@ $(error Specify a JSON template usable by Packer.)
 endif
 
 
-TIMESTAMP=timestamp.${PACKER_TEMPLATE}
+ifndef PACKER_VARS
+$(error Specify a JSON vars file usable by Packer.)
+endif
+
+
+TIMESTAMP=timestamp.${PACKER_VARS}
 .PHONY: check
 check: ${TIMESTAMP}
-${TIMESTAMP}: ${PACKER_TEMPLATE}
+${TIMESTAMP}: ${PACKER_VARS} ${PACKER_TEMPLATE}
 	@packer version
-	packer validate $< && touch $@
+	packer validate -var-file=$^ && touch $@
 
 
 .PHONY: add-boxes
@@ -24,6 +29,5 @@ BUILDER=$(shell packer inspect ${PACKER_TEMPLATE} | sed -ne '/^$$/d' -Ee 's/[[:s
 .PHONY: create-boxes
 create-boxes: ${BUILDER}
 
-
-OS_VERSION=$(shell packer inspect ${PACKER_TEMPLATE} | awk '/os_version/ { print $$3 }')
-INSTALLER_CONF=$(shell packer inspect ${PACKER_TEMPLATE} | awk '/installer_conf/ { print $$3 }')
+OS_VERSION=$(shell sed -ne '/os_version/p' ${PACKER_VARS} | sed -Ee 's/[[:space:]]+".+":[[:space:]]+"(.*)",/\1/g')
+INSTALLER_CONF=$(shell sed -ne '/installer_conf/p' ${PACKER_VARS} | sed -Ee 's/[[:space:]]+".+":[[:space:]]+"(.*)",/\1/g')

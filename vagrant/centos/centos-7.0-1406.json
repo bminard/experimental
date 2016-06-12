@@ -1,55 +1,6 @@
 {
-  "variables": {
-    "os_version": "7.0-1406",
-    "installer_conf": "ks.cfg"
-  },
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "boot_wait": "10s",
-      "boot_command": [
-          "<esc><wait>",
-          "linux ks=http://{{.HTTPIP}}:{{.HTTPPort}}/{{user `installer_conf`}}",
-          "<enter><wait>"
-      ],
-      "guest_os_type": "RedHat_64",
-      "headless": true,
-      "http_directory": "http",
-      "iso_url": "http://archive.kernel.org/centos-vault/7.0.1406/isos/x86_64/CentOS-7.0-1406-x86_64-Minimal.iso",
-      "iso_checksum": "04e99a4f1a013b95a7ebc9a90ffa9ac64d28eb9872bc193fbd7c581ec9b6a360",
-      "iso_checksum_type": "sha256",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_timeout": "1000s",
-      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "vm_name": "centos-{{user `os_version`}}-x86_64",
-      "vboxmanage": [
-          ["modifyvm", "{{.Name}}", "--memory", "512"],
-          ["modifyvm", "{{.Name}}", "--usb", "off"],
-          ["modifyvm", "{{.Name}}", "--audio", "none"]
-      ]
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "inline": [
-          "sudo yum -y install epel-release",
-          "sudo yum -y install gcc make bzip2 kernel-headers kernel-devel dkms",
-          "sudo yum clean all",
-          "sudo mount -o loop /home/vagrant/VBoxGuestAdditions.iso /mnt",
-          "sudo sh /mnt/VBoxLinuxAdditions.run",
-          "sudo umount /mnt",
-          "sudo rm -f /home/vagrant/VBoxGuestAdditions.iso"
-      ]
-    }
-  ],
-  "post-processors": [
-    {
-      "type": "vagrant",
-      "compression_level": "9",
-      "output": "centos-{{user `os_version`}}-x86_64_{{.Provider}}.box",
-      "vagrantfile_template": "./Vagrantfile"
-    }
-  ]
+  "os_version": "7.0-1406",
+  "installer_conf": "ks.cfg",
+  "iso_checksum": "04e99a4f1a013b95a7ebc9a90ffa9ac64d28eb9872bc193fbd7c581ec9b6a360",
+  "iso_url": "http://archive.kernel.org/centos-vault/7.0.1406/isos/x86_64/CentOS-7.0-1406-x86_64-Minimal.iso"
 }

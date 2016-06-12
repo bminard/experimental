@@ -1,0 +1,48 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+          "<esc><wait>",
+          "linux ks=http://{{.HTTPIP}}:{{.HTTPPort}}/{{user `installer_conf`}}",
+          "<enter><wait>"
+      ],
+      "boot_wait": "5s",
+      "guest_os_type": "Fedora",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "sha256",
+      "iso_url": "{{user `iso_url`}}",
+      "ssh_handshake_attempts": "100",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_timeout": "600s",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -hP now",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--usb", "on" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ],
+      "vm_name": "fedora-{{user `os_version`}}-i386"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+      "scripts": [
+        "scripts/yum_repos_d.sh",
+        "scripts/yum_install.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "compression_level": "9",
+      "output": "fedora-{{user `os_version`}}-i386_{{.Provider}}.box"
+    }
+  ]
+}
