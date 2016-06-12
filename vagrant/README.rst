@@ -7,8 +7,9 @@ and to `Gavin Burris`_' work on CentOS 7.
 The objective of these changes was to enhance my understaind of Packer and
 Vagrant and their use in supporting virtual machine deployment.
 
-`Boxcutter`_ is a valuable resource if you are interested in Vagrant and
-Packer.
+Additional resources:
+  - `Boxcutter`_
+  - `Using Packer and Vagrant to Build Virtual Machines`_ by Florian Motlik
 
 This repo introduces the following changes to Pierre's and Gavin's work.
 
@@ -22,6 +23,9 @@ It provided an excellent start to my investigation.
 
 Thanks to Gavin Burris for publishing information on using Vagrant and Packer on CentOS.
 Gavin's work is Copyright (c) 2016 The Wharton School, The University of Pennsylvania.
+
+Thanks to Florian Motlik.
+His example allowed me to understand Vagrant better.
 
 This repo introduces support for Fedora.
 No `Boxcutter`_ code is contained herein.
@@ -47,4 +51,5 @@ To build every Vagrant box for a specified distribution (e.g., Debian)::
 .. _Boxcutter: https://github.com/boxcutter
 .. _Gavin Burris: https://research-it.wharton.upenn.edu/news/minimal-linux-with-packer-and-vagrant/
 .. _Pierre Mavro: https://github.com/deimosfr
+.. _Using Packer and Vagrant to Build Virtual Machines: https://blog.codeship.com/packer-vagrant-tutorial/
 .. _packer-debian: https://github.com/deimosfr/packer-debian
