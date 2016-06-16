@@ -1,0 +1,7 @@
+#-------------------------------------------------------------------------------
+# conf: makefile.common
+#
+# Common make file recipes.
+#-------------------------------------------------------------------------------
+# Keep the honest processes out.
+SSH_PASSPHRASE?=vagrant
