@@ -4,12 +4,12 @@
 # Common make file recipes directed at Packer.
 #-------------------------------------------------------------------------------
 ifndef PACKER_TEMPLATE
-$(error Specify a JSON template usable by Packer.)
+$(error Specify a JSON template usable by Packer)
 endif
 
 
 ifndef PACKER_VARS
-$(error Specify a JSON vars file usable by Packer.)
+$(error Specify a JSON vars file usable by Packer)
 endif
 
 
