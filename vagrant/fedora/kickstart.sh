@@ -1,8 +1,61 @@
-# Fedora 20 kickstart file - ks.cfg
+#!/bin/sh
+#-------------------------------------------------------------------------------
+# fedora: kickstart.sh
 #
+# Provision Kickstart configuration file.
+#-------------------------------------------------------------------------------
+# Copyright (C) 2016  Brian Minard
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#-------------------------------------------------------------------------------
+function usage {
+	echo "Usage: ${0} --rootpw <password> <vagrant public ssh key>"
+	exit 1
+}
+
+
+ROOT_PASSWORD=""
+while [[ $# -gt 2 ]]; do
+	key="$1"
+	case $key in
+		--rootpw)
+			ROOT_PASSWORD="$2"
+			shift
+			;;
+		*)
+			usage
+			;;
+	esac
+	shift
+done
+readonly VAGRANT_PUBLIC_KEY=${1}; shift
+
+
+[ "${ROOT_PASSWORD}" != "" ] \
+	&& [ -f ${VAGRANT_PUBLIC_KEY} ] \
+	|| usage
+
+
+readonly SALT="\$6\$"`openssl rand -hex 8`
+readonly ENCRYPTED_ROOT_PASSWORD=`echo "import crypt,getpass; print crypt.crypt('${ROOT_PASSWORD}', '${SALT}')" | python -`
+
+
+cat<<_EOF
 # For more information on kickstart syntax and commands, refer to the
 # Fedora Installation Guide:
-# http://docs.fedoraproject.org/en-US/Fedora/19/html/Installation_Guide/s1-kickstart2-options.html
+# https://docs.fedoraproject.org/en-US/Fedora/13/html/Installation_Guide/sn-automating-installation.html
 #
 # For testing, you can fire up a local http server temporarily.
 # cd to the directory where this ks.cfg file resides and run the following:
@@ -16,8 +69,9 @@
 # Required settings
 lang en_US.UTF-8
 keyboard 'us'
-rootpw vagrant
-user --name=vagrant --password=vagrant
+#rootpw --iscrypted ${ENCRYPTED_ROOT_PASSWORD}
+rootpw ${ROOT_PASSWORD}
+user --name=vagrant
 auth --enableshadow --passalgo=sha512 --kickstart
 timezone UTC
 
@@ -52,8 +106,6 @@ reboot
 %packages --nobase --excludedocs
 openssh-server
 openssh-clients
-
-# Requirements for vagrant
 %end
 
 %post --log=/root/ks.log
@@ -64,15 +116,10 @@ echo '%vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/vagrant
 chmod 440 /etc/sudoers.d/vagrant
 
 mkdir -pm u+rwx,og-rwx /home/vagrant/.ssh
-#curl -o /home/vagrant/.ssh/authorized_keys https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 cat <<EOK >/home/vagrant/.ssh/authorized_keys
-ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8Y\
-Vr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdO\
-KLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7Pt\
-ixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmC\
-P3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcW\
-yLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key
+`cat ${VAGRANT_PUBLIC_KEY}`
 EOK
 chmod u+rw-x,og-rwx /home/vagrant/.ssh/authorized_keys
 chown -R vagrant:vagrant /home/vagrant/.ssh
 %end
+_EOF

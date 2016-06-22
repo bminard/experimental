@@ -1,3 +1,8 @@
 *.box
+*.swp
+output-virtualbox-iso
 packer_cache
+root_password
 timestamp.*
+vagrant_ssh_key
+vagrant_ssh_key.pub

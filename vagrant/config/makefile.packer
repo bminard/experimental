@@ -3,6 +3,22 @@
 #
 # Common make file recipes directed at Packer.
 #-------------------------------------------------------------------------------
+# Copyright (C) 2016  Brian Minard
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#-------------------------------------------------------------------------------
 ifndef PACKER_TEMPLATE
 $(error Specify a JSON template usable by Packer)
 endif
@@ -21,13 +37,33 @@ ${TIMESTAMP}: ${PACKER_VARS} ${PACKER_TEMPLATE}
 	packer validate -var-file=$^ && touch $@
 
 
-.PHONY: add-boxes
-add-boxes: create-boxes
-
-
 BUILDER=$(shell packer inspect ${PACKER_TEMPLATE} | sed -ne '/^$$/d' -Ee 's/[[:space:]]*//g' -Ee '/^Builders:/,/^[[:alnum:]]+:/p' | sed -e '/^.*:/d')
 .PHONY: create-boxes
 create-boxes: ${BUILDER}
 
+
 OS_VERSION=$(shell sed -ne '/os_version/p' ${PACKER_VARS} | sed -Ee 's/[[:space:]]+".+":[[:space:]]+"(.*)",/\1/g')
-INSTALLER_CONF=$(shell sed -ne '/installer_conf/p' ${PACKER_VARS} | sed -Ee 's/[[:space:]]+".+":[[:space:]]+"(.*)",/\1/g')
+
+
+# INSTALLER_CONF_DIR is also defined in the Packer template. See http_directory.
+INSTALLER_CONF_DIR=http
+INSTALLER_CONF_FILE=$(shell sed -ne '/installer_conf/p' ${PACKER_VARS} | sed -Ee 's/[[:space:]]+".+":[[:space:]]+"(.*)",/\1/g')
+INSTALLER_CONF=${INSTALLER_CONF_DIR}/${INSTALLER_CONF_FILE}
+
+
+.PHONY: packer-clean
+packer-clean: packer-mostlyclean
+	-rm -fr ${INSTALLER_CONF_DIR}
+
+
+.PHONY: packer-moslyclean
+packer-mostlyclean:
+	-rm ${INSTALLER_CONF}
+	-rm ${TIMESTAMP}
+
+
+${PACKER_TEMPLATE}: ${INSTALLER_CONF}
+	touch $@
+${INSTALLER_CONF}: | ${INSTALLER_CONF_DIR}
+${INSTALLER_CONF_DIR}:
+	mkdir -p $@

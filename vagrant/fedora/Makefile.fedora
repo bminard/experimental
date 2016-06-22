@@ -3,30 +3,47 @@
 #
 # Use this make file to construct a Vagrant box for a Fedora release.
 #-------------------------------------------------------------------------------
-include makefile.common
+# Copyright (C) 2016  Brian Minard
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#-------------------------------------------------------------------------------
+include makefile.credentials
 
 
 PACKER_TEMPLATE?=fedora.json
-
-
 include makefile.packer
 
 
 VIRTUALBOX_BOX=fedora-${OS_VERSION}-i386_virtualbox.box
 .PHONY: virtualbox-iso
 virtualbox-iso: ${VIRTUALBOX_BOX}
-${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} http/${INSTALLER_CONF} scripts/yum_repos_d.sh \
-	scripts/yum_install.sh
-	packer build -var 'ssh_password=${SSH_PASSPHRASE}' -var-file=${PACKER_VARS} ${PACKER_TEMPLATE}
+${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} ${VAGRANT_PRIVATE_KEY}
+	packer build -var 'ssh_private_key=${VAGRANT_PRIVATE_KEY}' -var-file=${PACKER_VARS} ${PACKER_TEMPLATE}
 
 
 # Remove files that take a long time to create.
 .PHONY: clean
-clean: mostlyclean
+clean: mostlyclean credentials-clean packer-clean
 	-rm -fr ${VIRTUALBOX_BOX}
 
 
 # Remove files that are recreated quickly.
 .PHONY: mostlyclean
-mostlyclean:
-	-rm ${TIMESTAMP}
+mostlyclean: credentials-mostlyclean packer-mostlyclean
+
+
+${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} scripts/yum_repos_d.sh \
+	scripts/yum_install.sh
+	sh kickstart.sh --rootpw "$(shell cat ${ROOT_PASSWORD})" ${VAGRANT_PUBLIC_KEY} > $@

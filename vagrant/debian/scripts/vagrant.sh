@@ -4,11 +4,10 @@
 
 function add_vagrant_key {
     homedir=$(su - $1 -c 'echo $HOME')
-    mkdir -p $homedir/.ssh
-    curl -L 'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub' -o $homedir/.ssh/authorized_keys2
+    mkdir -pm u+rwx,og-rwx $homedir/.ssh
+    mv /tmp/authorized_keys2 $homedir/.ssh # /tmp/authorized_keys2 is populated by the Packer template.
     chown -Rf $1. $homedir/.ssh
-    chmod 700 $homedir/.ssh
-    chmod 600 $homedir/.ssh/authorized_keys2
+    chmod u+rw-x,og-rwx $homedir/.ssh/authorized_keys2
 }
 
 if [ $(grep -c vagrant /etc/passwd) == 0 ] ; then
@@ -17,4 +16,3 @@ fi
 
 # Add public key to vagrant user
 add_vagrant_key vagrant
-

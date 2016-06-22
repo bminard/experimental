@@ -1,3 +1,44 @@
+#!/bin/sh
+#-------------------------------------------------------------------------------
+# centos: kickstart.sh
+#
+# Provision Kickstart configuration file.
+#-------------------------------------------------------------------------------
+# Copyright (C) 2016 Brian Minard
+#-------------------------------------------------------------------------------
+function usage {
+	echo "Usage: ${0} --rootpw <password> <vagrant public ssh key>"
+	exit 1
+}
+
+
+ROOT_PASSWORD=""
+while [[ $# -gt 2 ]]; do
+	key="$1"
+	case $key in
+		--rootpw)
+			ROOT_PASSWORD="$2"
+			shift
+			;;
+		*)
+			usage
+			;;
+	esac
+	shift
+done
+readonly VAGRANT_PUBLIC_KEY=${1}; shift
+
+
+[ "${ROOT_PASSWORD}" != "" ] \
+	&& [ -f ${VAGRANT_PUBLIC_KEY} ] \
+	|| usage
+
+
+readonly SALT="\$6\$"`openssl rand -hex 8`
+readonly ENCRYPTED_ROOT_PASSWORD=`echo "import crypt,getpass; print crypt.crypt('${ROOT_PASSWORD}', '${SALT}')" | python -`
+
+
+cat<<_EOF
 install
 text
 cdrom
@@ -5,8 +46,8 @@ skipx
 lang en_US.UTF-8
 keyboard us
 timezone UTC
-rootpw vagrant
-user --name=vagrant --password=vagrant
+rootpw --iscrypted ${ENCRYPTED_ROOT_PASSWORD}
+user --name=vagrant
 auth --enableshadow --passalgo=sha512 --kickstart
 firewall --disabled
 selinux --permissive
@@ -84,15 +125,11 @@ chmod 0440 /etc/sudoers.d/vagrant
 mkdir -pm 700 /home/vagrant/.ssh
 #curl -o /home/vagrant/.ssh/authorized_keys https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 cat <<EOK >/home/vagrant/.ssh/authorized_keys
-ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8Y\
-Vr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdO\
-KLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7Pt\
-ixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmC\
-P3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcW\
-yLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key
+`cat ${VAGRANT_PUBLIC_KEY}`
 EOK
 chmod 0600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant.vagrant /home/vagrant/.ssh
 yum -y update
 yum -y remove linux-firmware
 %end
+_EOF

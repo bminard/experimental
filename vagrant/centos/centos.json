@@ -15,7 +15,7 @@
       "iso_checksum_type": "sha256",
       "iso_url": "{{user `iso_url`}}",
       "ssh_username": "vagrant",
-      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_private_key_file": "{{user `ssh_private_key`}}",
       "ssh_port": 22,
       "ssh_timeout": "600s",
       "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -hP now",

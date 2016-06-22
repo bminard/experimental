@@ -3,29 +3,36 @@
 #
 # Use this make file to construct a Vagrant box for a CentOS release.
 #-------------------------------------------------------------------------------
-include makefile.common
+# Copyright (C) 2016 Brian Minard
+#-------------------------------------------------------------------------------
+include makefile.credentials
 
 
 PACKER_TEMPLATE?=centos.json
-
-
 include makefile.packer
 
 
 VIRTUALBOX_BOX=centos-${OS_VERSION}-x86_64_virtualbox.box
 .PHONY: virtualbox-iso
 virtualbox-iso: ${VIRTUALBOX_BOX}
-${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} http/${INSTALLER_CONF}
-	packer build -var 'ssh_password=${SSH_PASSPHRASE}' -var-file=${PACKER_VARS} ${PACKER_TEMPLATE}
+${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} ${VAGRANT_PRIVATE_KEY}
+	packer build -var 'ssh_private_key=${VAGRANT_PRIVATE_KEY}' -var-file=${PACKER_VARS} ${PACKER_TEMPLATE}
+
+
+.PHONY: create-boxes
+create-boxes: virtualbox-iso
 
 
 # Remove files that take a long time to create.
 .PHONY: clean
-clean: mostlyclean
+clean: mostlyclean credentials-clean packer-clean
 	-rm -fr ${VIRTUALBOX_BOX}
 
 
 # Remove files that are recreated quickly.
 .PHONY: mostlyclean
-mostlyclean:
-	-rm ${TIMESTAMP}
+mostlyclean: credentials-mostlyclean packer-mostlyclean
+
+
+${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY}
+	sh kickstart.sh --rootpw "$(shell cat ${ROOT_PASSWORD})" ${VAGRANT_PUBLIC_KEY} > $@
