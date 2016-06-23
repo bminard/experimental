@@ -1,5 +1,6 @@
 *.box
 *.swp
+http
 output-virtualbox-iso
 packer_cache
 root_password
