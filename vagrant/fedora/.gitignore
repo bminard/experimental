@@ -3,7 +3,5 @@
 http
 output-virtualbox-iso
 packer_cache
-root_password
+credentials
 timestamp.*
-vagrant_ssh_key
-vagrant_ssh_key.pub
