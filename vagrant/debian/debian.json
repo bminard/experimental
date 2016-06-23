@@ -21,8 +21,8 @@
       ],
       "boot_wait": "10s",
       "disk_size": 32768,
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "Debian_64",
+      "guest_additions_mode": "disable",
       "headless": true,
       "http_directory": "http",
       "iso_checksum": "{{user `iso_checksum`}}",
@@ -64,7 +64,6 @@
         "scripts/sudoers.sh",
         "scripts/vagrant.sh",
         "scripts/networking.sh",
-        "scripts/vbaddguest.sh",
         "scripts/cleanup.sh"
       ]
     }
