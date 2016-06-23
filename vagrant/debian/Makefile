@@ -13,16 +13,23 @@ check:
 	PACKER_VARS=debian-wheezy.json ${MAKE} -f Makefile.debian check
 
 
-# Remove files that take a long time to create.
+# Remove all files (including Packer caches).
+.PHONY: realclean
+realclean: mostlyclean
+	PACKER_VARS=debian-jessie.json ${MAKE} -f Makefile.debian realclean
+	PACKER_VARS=debian-wheezy.json ${MAKE} -f Makefile.debian realclean
+
+
+# Remove files that take a long time to create (including Vagrant boxes,
+# Vagrant box prerequisites and user credentials).
 .PHONY: clean
 clean: mostlyclean
 	PACKER_VARS=debian-jessie.json ${MAKE} -f Makefile.debian clean
 	PACKER_VARS=debian-wheezy.json ${MAKE} -f Makefile.debian clean
-	-rm -fr packer_cache
 
 
-# Remove files that are recreated quickly.
-.PHONY: mostlyclean
+
+# Remove files that are created quickly.
 mostlyclean:
 	PACKER_VARS=debian-jessie.json ${MAKE} -f Makefile.debian mostlyclean
 	PACKER_VARS=debian-wheezy.json ${MAKE} -f Makefile.debian mostlyclean

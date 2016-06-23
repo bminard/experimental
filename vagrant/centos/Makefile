@@ -15,15 +15,22 @@ check:
 	PACKER_VARS=centos-7.2-1511.json ${MAKE} -f Makefile.centos check
 
 
-# Remove files that take a long time to create.
+# Remove all files (including Packer caches).
+.PHONY: realclean
+realclean: mostlyclean
+	PACKER_VARS=centos-7.0-1406.json ${MAKE} -f Makefile.centos realclean
+	PACKER_VARS=centos-7.2-1511.json ${MAKE} -f Makefile.centos realclean
+
+
+# Remove files that take a long time to create (including Vagrant boxes,
+# Vagrant box prerequisites and user credentials).
 .PHONY: clean
 clean: mostlyclean
 	PACKER_VARS=centos-7.0-1406.json ${MAKE} -f Makefile.centos clean
 	PACKER_VARS=centos-7.2-1511.json ${MAKE} -f Makefile.centos clean
-	-rm -fr packer_cache
 
 
-# Remove files that are recreated quickly.
+# Remove files that are created quickly.
 .PHONY: mostlyclean
 mostlyclean:
 	PACKER_VARS=centos-7.0-1406.json ${MAKE} -f Makefile.centos mostlyclean

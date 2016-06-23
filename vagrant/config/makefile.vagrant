@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
-# conf: makefile.credentials
+# conf: Makefile.vagrant
 #
-# Credential make file recipes.
+# Common make file recipes directed at Vagrant.
 #-------------------------------------------------------------------------------
 # Copyright (C) 2016  Brian Minard
 #
@@ -19,29 +19,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #-------------------------------------------------------------------------------
-ROOT_PASSWORD?=root_password
-${ROOT_PASSWORD}:
-	        openssl rand -hex 13 > $@ && chmod u+rw-x,og-rwx $@
-
-
-VAGRANT_PRIVATE_KEY?=vagrant_ssh_key
-VAGRANT_PUBLIC_KEY?=${VAGRANT_PRIVATE_KEY}.pub
-${VAGRANT_PRIVATE_KEY} ${VAGRANT_PUBLIC_KEY}:
-	        ssh-keygen -C vagrant@`hostname` -N '' -f ${VAGRANT_PRIVATE_KEY}
-
-
-# Remove all files (including Packer caches).
-.PHONY: credentials-realclean
-credentials-realclean: credentials-clean
-
-
-# Remove files that take a long time to create (including Vagrant boxes,
-# Vagrant box prerequisites and user credentials).
-.PHONY: credentials-clean
-credentials-clean: credentials-mostlyclean
-	-rm -fr ${ROOT_PASSWORD} ${VAGRANT_PRIVATE_KEY} ${VAGRANT_PUBLIC_KEY}
-
-
-# Remove files that are created quickly.
-.PHONY: credentials-mostlyclean
-credentials-mostlyclean:
+.PHONY: add-boxes
+add-boxes: create-boxes
+	echo vagrant box remove vagrant_machine || true
+	echo vagrant box add vagrant_machine ${VIRTUALBOX_BOX}

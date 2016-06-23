@@ -6,6 +6,7 @@
 # Copyright (C) 2016 Brian Minard
 #-------------------------------------------------------------------------------
 include makefile.credentials
+include makefile.vagrant
 
 
 PACKER_TEMPLATE?=centos.json
@@ -23,13 +24,19 @@ ${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} ${VAGRANT_PRIVATE_KEY}
 create-boxes: virtualbox-iso
 
 
-# Remove files that take a long time to create.
+# Remove all files (including Packer caches).
+.PHONY: realclean
+realclean: clean credentials-realclean packer-realclean
+
+
+# Remove files that take a long time to create (including Vagrant boxes,
+# Vagrant box prerequisites and user credentials).
 .PHONY: clean
 clean: mostlyclean credentials-clean packer-clean
 	-rm -fr ${VIRTUALBOX_BOX}
 
 
-# Remove files that are recreated quickly.
+# Remove files that are created quickly.
 .PHONY: mostlyclean
 mostlyclean: credentials-mostlyclean packer-mostlyclean
 

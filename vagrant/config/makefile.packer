@@ -51,6 +51,14 @@ INSTALLER_CONF_FILE=$(shell sed -ne '/installer_conf/p' ${PACKER_VARS} | sed -Ee
 INSTALLER_CONF=${INSTALLER_CONF_DIR}/${INSTALLER_CONF_FILE}
 
 
+# Remove all files (including Packer caches).
+.PHONY: packer-realclean
+packer-realclean: packer-clean
+	-rm -fr packer_cache
+
+
+# Remove files that take a long time to create (including Vagrant boxes,
+# Vagrant box prerequisites and user credentials).
 .PHONY: packer-clean
 packer-clean: packer-mostlyclean
 	-rm -fr ${INSTALLER_CONF_DIR}

@@ -32,7 +32,16 @@ check:
 	${MAKE} -C fedora check
 
 
-# Remove files that take a long time to create.
+# Remove all files (including Packer caches).
+.PHONY: realclean
+realclean: clean
+	${MAKE} -C centos realclean
+	${MAKE} -C debian realclean
+	${MAKE} -C fedora realclean
+
+
+# Remove files that take a long time to create (including Vagrant boxes,
+# Vagrant box prerequisites and user credentials).
 .PHONY: clean
 clean: mostlyclean
 	${MAKE} -C centos clean
@@ -40,7 +49,7 @@ clean: mostlyclean
 	${MAKE} -C fedora clean
 
 
-# Remove files that are recreated quickly.
+# Remove files that are created quickly.
 .PHONY: mostlyclean
 mostlyclean:
 	${MAKE} -C centos mostlyclean

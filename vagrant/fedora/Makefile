@@ -28,14 +28,21 @@ check:
 	PACKER_VARS=fedora-13.json ${MAKE} -f Makefile.fedora check
 
 
-# Remove files that take a long time to create.
+# Remove all files (including Packer caches).
+.PHONY: realclean
+realclean: clean
+	PACKER_VARS=fedora-13.json ${MAKE} -f Makefile.fedora realclean
+
+
+# Remove files that take a long time to create (including Vagrant boxes,
+# Vagrant box prerequisites and user credentials).
 .PHONY: clean
 clean: mostlyclean
 	PACKER_VARS=fedora-13.json ${MAKE} -f Makefile.fedora clean
 	-rm -fr packer_cache
 
 
-# Remove files that are recreated quickly.
+# Remove files that are created quickly.
 .PHONY: mostlyclean
 mostlyclean:
 	PACKER_VARS=fedora-13.json ${MAKE} -f Makefile.fedora mostlyclean

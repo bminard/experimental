@@ -20,6 +20,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #-------------------------------------------------------------------------------
 include makefile.credentials
+include makefile.vagrant
 
 
 PACKER_TEMPLATE?=fedora.json
@@ -33,13 +34,19 @@ ${VIRTUALBOX_BOX}: ${PACKER_VARS} ${PACKER_TEMPLATE} ${VAGRANT_PRIVATE_KEY}
 	packer build -var 'ssh_private_key=${VAGRANT_PRIVATE_KEY}' -var-file=${PACKER_VARS} ${PACKER_TEMPLATE}
 
 
-# Remove files that take a long time to create.
+# Remove all files (including Packer caches).
+.PHONY: realclean
+realclean: clean credentials-realclean packer-realclean
+
+
+# Remove files that take a long time to create (including Vagrant boxes,
+# Vagrant box prerequisites and user credentials).
 .PHONY: clean
 clean: mostlyclean credentials-clean packer-clean
 	-rm -fr ${VIRTUALBOX_BOX}
 
 
-# Remove files that are recreated quickly.
+# Remove files that are created quickly.
 .PHONY: mostlyclean
 mostlyclean: credentials-mostlyclean packer-mostlyclean
 
