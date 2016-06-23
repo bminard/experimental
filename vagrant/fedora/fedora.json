@@ -9,6 +9,7 @@
       ],
       "boot_wait": "5s",
       "guest_os_type": "Fedora",
+      "guest_additions_mode": "disable",
       "headless": true,
       "http_directory": "http",
       "iso_checksum": "{{user `iso_checksum`}}",
