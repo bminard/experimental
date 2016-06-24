@@ -63,4 +63,4 @@ install: python-virtual-environment
 
 .PHONY: python-virtual-environment
 python-virtual-environment: virtualenv.sh
-	sh virtualenv.sh vagrant-metadata
+	sh virtualenv.sh passlib vagrant-metadata

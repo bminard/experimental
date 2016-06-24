@@ -48,9 +48,11 @@ readonly VAGRANT_PUBLIC_KEY=${1}; shift
 	|| usage
 
 
-readonly SALT="\$6\$"`openssl rand -hex 8`
 readonly PLAINTEXT_ROOT_PASSWORD=`cat ${ROOT_PASSWORD}`
-readonly ENCRYPTED_ROOT_PASSWORD=`echo "import crypt,getpass; print crypt.crypt('${PLAINTEXT_ROOT_PASSWORD}', '${SALT}')" | python -`
+readonly ENCRYPTED_ROOT_PASSWORD=`echo "from passlib.hash import sha512_crypt; print sha512_crypt.encrypt('${PLAINTEXT_ROOT_PASSWORD}')" | python -`
+if [ -z ${ENCRYPTED_ROOT_PASSWORD} ]; then
+	exit 1
+fi
 
 
 cat<<_EOF
@@ -70,8 +72,7 @@ cat<<_EOF
 # Required settings
 lang en_US.UTF-8
 keyboard 'us'
-#rootpw --iscrypted ${ENCRYPTED_ROOT_PASSWORD}
-rootpw ${ROOT_PASSWORD}
+rootpw --iscrypted ${ENCRYPTED_ROOT_PASSWORD}
 user --name=vagrant
 auth --enableshadow --passalgo=sha512 --kickstart
 timezone UTC
