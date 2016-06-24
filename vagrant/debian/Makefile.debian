@@ -41,4 +41,4 @@ mostlyclean: credentials-mostlyclean packer-mostlyclean
 
 ${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} scripts/cleanup.sh \
 	scripts/networking.sh scripts/sshd.sh scripts/sudoers.sh scripts/update.sh scripts/vagrant.sh
-	sh kickstart.sh --rootpw "$(shell cat ${ROOT_PASSWORD})" ${VAGRANT_PUBLIC_KEY} > $@
+	sh kickstart.sh --rootpw ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} > $@

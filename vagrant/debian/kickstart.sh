@@ -27,13 +27,14 @@ done
 readonly VAGRANT_PUBLIC_KEY=${1}; shift
 
 
-[ "${ROOT_PASSWORD}" != "" ] \
+[ -f ${ROOT_PASSWORD} ] \
 	&& [ -f ${VAGRANT_PUBLIC_KEY} ] \
 	|| usage
 
 
 readonly SALT="\$6\$"`openssl rand -hex 8`
-readonly ENCRYPTED_ROOT_PASSWORD=`echo "import crypt,getpass; print crypt.crypt('${ROOT_PASSWORD}', '${SALT}')" | python -`
+readonly PLAINTEXT_ROOT_PASSWORD=`cat ${ROOT_PASSWORD}`
+readonly ENCRYPTED_ROOT_PASSWORD=`echo "import crypt,getpass; print crypt.crypt('${PLAINTEXT_ROOT_PASSWORD}', '${SALT}')" | python -`
 
 
 cat<<_EOF

@@ -42,4 +42,4 @@ mostlyclean: credentials-mostlyclean packer-mostlyclean
 
 
 ${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY}
-	sh kickstart.sh --rootpw "$(shell cat ${ROOT_PASSWORD})" ${VAGRANT_PUBLIC_KEY} > $@
+	sh kickstart.sh --rootpw ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} > $@
