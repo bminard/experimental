@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.require_version ">= 1.8.1"
+
+
+Vagrant.configure("2") do |config|
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "fedora13"
+  config.vm.box_url = "file://fedora-13-i386_virtualbox.box"
+  config.ssh.private_key_path = config.ssh.private_key_path = "credentials/vagrant_ssh_key"
+
+  config.vm.network :private_network, ip: "192.168.50.5"
+  config.vm.network :forwarded_port, guest: 22, host: 2258
+
+  # Forward X11
+  config.ssh.forward_x11 = true
+
+ ## Using NFS as it has much better performance
+ ## On linux install nfs-kernel-server, MacOS works by default
+ ## Will ask for host's root password to set some things up
+ config.vm.synced_folder ".", "/vagrant", :nfs => true
+end

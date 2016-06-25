@@ -1,10 +1,10 @@
 #!/bin/sh
 #-------------------------------------------------------------------------------
-# fedora: kickstart.sh
+# fedora: yum_clean.sh
 #
-# Install required packages using yum.
+# Clean out the yum database and cache.
 #-------------------------------------------------------------------------------
-# Copyright (C) 2016  Brian Minard
+# Copyright (C) 2016 Brian Minard
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,4 +20,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #-------------------------------------------------------------------------------
-yum --assumeyes install openssl
+# To remedy yum failures on Fedora 13, run this script after updating the yum
+# repo URLs in /etc/yum.repos.d.
+set -x
+
+
+yum --assumeyes clean all

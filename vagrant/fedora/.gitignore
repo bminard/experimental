@@ -1,7 +1,8 @@
 *.box
 *.swp
+.vagrant
+credentials
 http
 output-virtualbox-iso
 packer_cache
-credentials
 timestamp.*

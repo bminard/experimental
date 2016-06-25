@@ -50,7 +50,7 @@ readonly VAGRANT_PUBLIC_KEY=${1}; shift
 
 readonly PLAINTEXT_ROOT_PASSWORD=`cat ${ROOT_PASSWORD}`
 readonly ENCRYPTED_ROOT_PASSWORD=`echo "from passlib.hash import sha512_crypt; print sha512_crypt.encrypt('${PLAINTEXT_ROOT_PASSWORD}')" | python -`
-if [ -z ${ENCRYPTED_ROOT_PASSWORD} ]; then
+if [ -z "${ENCRYPTED_ROOT_PASSWORD}" ]; then
 	exit 1
 fi
 
@@ -105,6 +105,8 @@ skipx
 services --enabled network
 reboot
 
+# Keep this package list short to avoid SSH timeouts during Vagrant Box
+# creation. Use the Packer template to install additional packages.
 %packages --nobase --excludedocs
 openssh-server
 openssh-clients
@@ -112,9 +114,10 @@ openssh-clients
 
 %post --log=/root/ks.log
 
-# Give Vagrant user permission to sudo.
-echo 'Defaults:vagrant !requiretty' > /etc/sudoers.d/vagrant
-echo '%vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/vagrant
+cat <<EOF > /etc/sudoers.d/vagrant
+Defaults:vagrant !requiretty
+%vagrant ALL=(root) NOPASSWD: ALL
+EOF
 chmod 440 /etc/sudoers.d/vagrant
 
 mkdir -pm u+rwx,og-rwx /home/vagrant/.ssh

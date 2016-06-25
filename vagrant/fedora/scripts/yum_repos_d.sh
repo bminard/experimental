@@ -1,6 +1,6 @@
 #!/bin/sh
 #-------------------------------------------------------------------------------
-# fedora: kickstart.sh
+# fedora: yum_repos_d.sh
 #
 # Provision /etc/yum.repos.d with updated repository information.
 #-------------------------------------------------------------------------------
@@ -20,11 +20,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #-------------------------------------------------------------------------------
+set -x
+
+
 readonly FEDORA_REPOSITORY=/etc/yum.repos.d/fedora.repo
-readonly FEDORA_UPDATES_REPOSITORY=/etc/yum.repos.d/fedora-updates.repo
-readonly FEDORA_UPDATES_TESTING_REPOSITORY=/etc/yum.repos.d/fedora-updates-testing.repo
-
-
 cat<<_EOF > ${FEDORA_REPOSITORY}
 [fedora]
 name=Fedora \$releasever - \$basearch
@@ -54,6 +53,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
 _EOF
 
 
+readonly FEDORA_UPDATES_REPOSITORY=/etc/yum.repos.d/fedora-updates.repo
 cat<<_EOF > ${FEDORA_UPDATES_REPOSITORY}
 [updates]
 name=Fedora \$releasever - \$basearch - Updates
@@ -78,6 +78,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-\$basearch
 _EOF
 
 
+readonly FEDORA_UPDATES_TESTING_REPOSITORY=/etc/yum.repos.d/fedora-updates-testing.repo
 cat<<_EOF > ${FEDORA_UPDATES_TESTING_REPOSITORY}
 [updates-testing]
 name=Fedora \$releasever - \$basearch - Test Updates
