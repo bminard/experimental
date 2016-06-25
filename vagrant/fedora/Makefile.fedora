@@ -24,6 +24,13 @@ include makefile.vagrant
 
 
 PACKER_TEMPLATE?=fedora.json
+PACKER_TEMPLATE_PROVISIONERS=scripts/dhcp.sh \
+	scripts/man_pages.sh \
+	scripts/nfs.sh \
+	scripts/yum_clean.sh \
+	scripts/yum_repos_d.sh \
+	scripts/yum_update.sh \
+	scripts/zero_fill_disk.sh
 include makefile.packer
 
 
@@ -51,6 +58,5 @@ clean: mostlyclean credentials-clean packer-clean
 mostlyclean: credentials-mostlyclean packer-mostlyclean
 
 
-${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} scripts/yum_repos_d.sh \
-	scripts/yum_install.sh
+${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY}
 	sh kickstart.sh --rootpw ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} > $@

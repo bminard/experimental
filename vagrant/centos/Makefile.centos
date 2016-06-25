@@ -10,6 +10,7 @@ include makefile.vagrant
 
 
 PACKER_TEMPLATE?=centos.json
+PACKER_TEMPLATE_PROVISIONERS=
 include makefile.packer
 
 

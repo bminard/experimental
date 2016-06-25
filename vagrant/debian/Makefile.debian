@@ -8,6 +8,12 @@ include makefile.vagrant
 
 
 PACKER_TEMPLATE?=debian.json
+PACKER_TEMPLATE_PROVISIONERS=scripts/cleanup.sh \
+	scripts/networking.sh \
+	scripts/sshd.sh \
+	scripts/sudoers.sh \
+	scripts/update.sh \
+	scripts/vagrant.sh
 include makefile.packer
 
 
@@ -39,6 +45,5 @@ clean: mostlyclean credentials-clean packer-clean
 mostlyclean: credentials-mostlyclean packer-mostlyclean
 
 
-${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} scripts/cleanup.sh \
-	scripts/networking.sh scripts/sshd.sh scripts/sudoers.sh scripts/update.sh scripts/vagrant.sh
+${INSTALLER_CONF}: kickstart.sh ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY}
 	sh kickstart.sh --rootpw ${ROOT_PASSWORD} ${VAGRANT_PUBLIC_KEY} > $@
