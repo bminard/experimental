@@ -1,5 +1,6 @@
 *.box
 *.swp
+.vagrant
 credentials
 http
 output-virtualbox-iso

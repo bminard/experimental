@@ -31,8 +31,13 @@
   "provisioners": [
     {
       "type": "shell",
-      "inline": [
-          "sudo yum clean all"
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+      "scripts": [
+        "scripts/yum_update.sh",
+        "scripts/nfs.sh",
+        "scripts/man_pages.sh",
+        "scripts/yum_clean.sh",
+        "scripts/zero_fill_disk.sh"
       ]
     }
   ],

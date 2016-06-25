@@ -34,9 +34,11 @@ readonly VAGRANT_PUBLIC_KEY=${1}; shift
 	|| usage
 
 
-readonly SALT="\$6\$"`openssl rand -hex 8`
 readonly PLAINTEXT_ROOT_PASSWORD=`cat ${ROOT_PASSWORD}`
-readonly ENCRYPTED_ROOT_PASSWORD=`echo "import crypt,getpass; print crypt.crypt('${PLAINTEXT_ROOT_PASSWORD}', '${SALT}')" | python -`
+readonly ENCRYPTED_ROOT_PASSWORD=`echo "from passlib.hash import sha512_crypt; print sha512_crypt.encrypt('${PLAINTEXT_ROOT_PASSWORD}')" | python -`
+if [ -z "${ENCRYPTED_ROOT_PASSWORD}" ]; then
+	exit 1
+fi
 
 
 cat<<_EOF
@@ -59,78 +61,26 @@ autopart
 firstboot --disable
 reboot
 
+# Keep this package list short to avoid SSH timeouts during Vagrant Box
+# creation. Use the Packer template to install additional packages.
 %packages --instLangs=en_US.utf8 --nobase --ignoremissing --excludedocs
-
+openssh-server
 openssh-clients
-sudo
-kernel-headers
-kernel-devel
-gcc
-make
-perl
-curl
-wget
-nfs-utils
-net-tools
-vim-minimal
-bzip2
--fprintd-pam
--intltool
--mariadb-libs
--postfix
--linux-firmware
--aic94xx-firmware
--atmel-firmware
--b43-openfwwf
--bfa-firmware
--ipw2100-firmware
--ipw2200-firmware
--ivtv-firmware
--iwl100-firmware
--iwl105-firmware
--iwl135-firmware
--iwl1000-firmware
--iwl2030-firmware
--iwl2000-firmware
--iwl3060-firmware
--iwl3160-firmware
--iwl3945-firmware
--iwl4965-firmware
--iwl5000-firmware
--iwl5150-firmware
--iwl6000-firmware
--iwl6000g2a-firmware
--iwl6000g2b-firmware
--iwl6050-firmware
--iwl7260-firmware
--libertas-sd8686-firmware
--libertas-sd8787-firmware
--libertas-usb8388-firmware
--ql2100-firmware
--ql2200-firmware
--ql23xx-firmware
--ql2400-firmware
--ql2500-firmware
--rt61pci-firmware
--rt73usb-firmware
--xorg-x11-drv-ati-firmware
--zd1211-firmware
 %end
-
 
 %post --log=/root/ks.log
 
-echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/vagrant
-echo "Defaults:vagrant !requiretty" >> /etc/sudoers.d/vagrant
+cat <<EOF > /etc/sudoers.d/vagrant
+vagrant ALL=(ALL) NOPASSWD: ALL
+Defaults:vagrant !requiretty
+EOF
 chmod 0440 /etc/sudoers.d/vagrant
+
 mkdir -pm 700 /home/vagrant/.ssh
-#curl -o /home/vagrant/.ssh/authorized_keys https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 cat <<EOK >/home/vagrant/.ssh/authorized_keys
 `cat ${VAGRANT_PUBLIC_KEY}`
 EOK
 chmod 0600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant.vagrant /home/vagrant/.ssh
-yum -y update
-yum -y remove linux-firmware
 %end
 _EOF
