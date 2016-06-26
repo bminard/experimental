@@ -20,9 +20,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #-------------------------------------------------------------------------------
-# To remedy yum failures on Fedora 13, run this script after updating the yum
-# repo URLs in /etc/yum.repos.d.
 set -x
 
 
+# To remedy yum failures on Fedora 13, run this script after updating the yum
+# repo URLs in /etc/yum.repos.d.
 yum --assumeyes update
