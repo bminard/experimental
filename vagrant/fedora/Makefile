@@ -39,7 +39,6 @@ realclean: clean
 .PHONY: clean
 clean: mostlyclean
 	PACKER_VARS=fedora-13.json ${MAKE} -f Makefile.fedora clean
-	-rm -fr packer_cache
 
 
 # Remove files that are created quickly.
