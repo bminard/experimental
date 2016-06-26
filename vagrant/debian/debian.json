@@ -52,7 +52,7 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "vagrant_ssh_key.pub",
+      "source": "credentials/vagrant_ssh_key.pub",
       "destination": "/tmp/authorized_keys2"
     },
     {
