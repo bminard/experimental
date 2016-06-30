@@ -9,11 +9,9 @@ include makefile.vagrant
 
 PACKER_TEMPLATE?=debian.json
 PACKER_TEMPLATE_PROVISIONERS=scripts/cleanup.sh \
-	scripts/networking.sh \
-	scripts/sshd.sh \
-	scripts/sudoers.sh \
+	scripts/nfs.sh \
 	scripts/update.sh \
-	scripts/vagrant.sh
+	scripts/zero_fill_disk.sh
 include makefile.packer
 
 

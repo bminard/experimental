@@ -51,20 +51,13 @@
   ],
   "provisioners": [
     {
-      "type": "file",
-      "source": "credentials/vagrant_ssh_key.pub",
-      "destination": "/tmp/authorized_keys2"
-    },
-    {
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
       "scripts": [
         "scripts/update.sh",
-        "scripts/sshd.sh",
-        "scripts/sudoers.sh",
-        "scripts/vagrant.sh",
-        "scripts/networking.sh",
-        "scripts/cleanup.sh"
+        "scripts/nfs.sh",
+        "scripts/cleanup.sh",
+        "scripts/zero_fill_disk.sh"
       ]
     }
   ]
