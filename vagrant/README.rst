@@ -31,6 +31,18 @@ This repo introduces support for Fedora.
 No `Boxcutter`_ code is contained herein.
 `Boxcutter`_ and `Boxcutter Fedora`_ did influence the my implementation.
 
+Prerequisites
+-------------
+
+  - GNU Make 3.85
+  - Packer 0.10.1
+  - Vagrant 1.8.1
+  - Python's passlib
+
+Using Python's `virtualenv`_?
+`make install` takes care of Python dependencies.
+It will not install Python modules into anything other than a virtual environment,
+
 Using
 -----
 
@@ -39,11 +51,15 @@ Run `exportenv.sh` in the project's root directory::
 
         > source exportenv.sh `pwd`
 
-To build every Vagrant box::
+Optionally, run::
+
+        > make install
+
+To build every Vagrant Box::
 
         > make all
 
-To build every Vagrant box for a specified distribution (e.g., Debian)::
+To build every Vagrant Box for a specified distribution (e.g., Debian)::
 
         > cd debian; make all
 
@@ -53,3 +69,4 @@ To build every Vagrant box for a specified distribution (e.g., Debian)::
 .. _Pierre Mavro: https://github.com/deimosfr
 .. _Using Packer and Vagrant to Build Virtual Machines: https://blog.codeship.com/packer-vagrant-tutorial/
 .. _packer-debian: https://github.com/deimosfr/packer-debian
+.. _virtualenv: https://virtualenv.pypa.io/en/stable/
