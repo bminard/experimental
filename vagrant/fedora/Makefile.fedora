@@ -25,6 +25,7 @@ include makefile.vagrant
 
 PACKER_TEMPLATE?=fedora.json
 PACKER_TEMPLATE_PROVISIONERS=scripts/man_pages.sh \
+	scripts/ntp.sh \
 	scripts/nfs.sh \
 	scripts/yum_clean.sh \
 	scripts/yum_repos_d.sh \
