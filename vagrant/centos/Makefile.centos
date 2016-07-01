@@ -10,7 +10,13 @@ include makefile.vagrant
 
 
 PACKER_TEMPLATE?=centos.json
-PACKER_TEMPLATE_PROVISIONERS=
+PACKER_TEMPLATE_PROVISIONERS=scripts/man_pages.sh \
+                             scripts/nfs.sh \
+                             scripts/ntp.sh \
+                             scripts/yum_clean.sh \
+                             scripts/yum_install.sh \
+                             scripts/yum_update.sh \
+                             scripts/zero_fill_disk.sh
 include makefile.packer
 
 

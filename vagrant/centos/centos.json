@@ -35,6 +35,7 @@
       "scripts": [
         "scripts/yum_update.sh",
         "scripts/nfs.sh",
+        "scripts/ntp.sh",
         "scripts/man_pages.sh",
         "scripts/yum_clean.sh",
         "scripts/zero_fill_disk.sh"
