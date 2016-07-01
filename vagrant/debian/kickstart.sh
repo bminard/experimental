@@ -32,12 +32,22 @@ readonly VAGRANT_PUBLIC_KEY=${1}; shift
 	|| usage
 
 
-readonly SALT="\$6\$"`openssl rand -hex 8`
+# Python's passlib required on MacOS
+function encrypt_password {
+	echo `echo "from passlib.hash import sha512_crypt; print sha512_crypt.encrypt('${1}')" | python -`
+}
+
+
 readonly PLAINTEXT_ROOT_PASSWORD=`cat ${ROOT_PASSWORD}`
-readonly ENCRYPTED_ROOT_PASSWORD=`echo "from passlib.hash import sha512_crypt; print sha512_crypt.encrypt('${PLAINTEXT_ROOT_PASSWORD}')" | python -`
+readonly ENCRYPTED_ROOT_PASSWORD=`encrypt_password ${PLAINTEXT_ROOT_PASSWORD}`
 if [ -z "${ENCRYPTED_ROOT_PASSWORD}" ]; then
 	exit 1
 fi
+
+
+# lockout vagrant user's password
+readonly PLAINTEXT_VAGRANT_PASSWORD="\$6\$"`openssl rand -hex 13`
+readonly ENCRYPTED_VAGRANT_PASSWORD="!"`encrypt_password ${PLAINTEXT_VAGRANT_PASSWORD}`
 
 
 cat<<_EOF
@@ -71,7 +81,7 @@ d-i partman/confirm_nooverwrite boolean true
 d-i partman/confirm_write_new_label boolean true
 
 
-d-i pkgsel/include string openssh-server sudo bzip2 acpid cryptsetup zlib1g-dev wget curl dkms make nfs-common
+d-i pkgsel/include string openssh-server sudo
 d-i pkgsel/install-language-support boolean false
 d-i pkgsel/update-policy select unattended-upgrades
 d-i pkgsel/upgrade select full-upgrade
@@ -96,8 +106,9 @@ d-i passwd/root-password-crypted password ${ENCRYPTED_ROOT_PASSWORD}
 
 d-i passwd/user-fullname string vagrant
 d-i passwd/user-uid string 900
-d-i passwd/user-password password vagrant
-d-i passwd/user-password-again password vagrant
+d-i passwd/user-password-crypted password ${ENCRYPTED_VAGRANT_PASSWORD}
+# d-i passwd/user-password password vagrant
+# d-i passwd/user-password-again password vagrant
 d-i passwd/username string vagrant
 
 d-i preseed/late_command string in-target /bin/mkdir -pm u+rwx,go-rwx /home/vagrant/.ssh ; \
