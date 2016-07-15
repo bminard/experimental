@@ -107,8 +107,6 @@ d-i passwd/root-password-crypted password ${ENCRYPTED_ROOT_PASSWORD}
 d-i passwd/user-fullname string vagrant
 d-i passwd/user-uid string 900
 d-i passwd/user-password-crypted password ${ENCRYPTED_VAGRANT_PASSWORD}
-# d-i passwd/user-password password vagrant
-# d-i passwd/user-password-again password vagrant
 d-i passwd/username string vagrant
 
 d-i preseed/late_command string in-target /bin/mkdir -pm u+rwx,go-rwx /home/vagrant/.ssh ; \
