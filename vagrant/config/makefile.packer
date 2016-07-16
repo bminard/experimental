@@ -37,7 +37,7 @@ ${TIMESTAMP}: ${PACKER_VARS} ${PACKER_TEMPLATE}
 	packer validate -var-file=$^ && touch $@
 
 
-BUILDER=$(shell packer inspect ${PACKER_TEMPLATE} | sed -ne '/^$$/d' -Ee 's/[[:space:]]*//g' -Ee '/^Builders:/,/^[[:alnum:]]+:/p' | sed -e '/^.*:/d')
+BUILDER=$(shell packer inspect ${PACKER_TEMPLATE} | sed -ne '/^$$/d' -Ee '/^Builders:/,/^[[:alnum:]]+:/p' | sed -e '/^.*:/d')
 .PHONY: create-boxes
 create-boxes: ${BUILDER}
 
