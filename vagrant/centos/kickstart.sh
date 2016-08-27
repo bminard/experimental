@@ -29,8 +29,8 @@ done
 readonly VAGRANT_PUBLIC_KEY=${1}; shift
 
 
-[ -f ${ROOT_PASSWORD} ] \
-	&& [ -f ${VAGRANT_PUBLIC_KEY} ] \
+[ -f "${ROOT_PASSWORD}" ] \
+	&& [ -f "${VAGRANT_PUBLIC_KEY}" ] \
 	|| usage
 
 
