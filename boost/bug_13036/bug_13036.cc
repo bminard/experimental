@@ -1,6 +1,5 @@
 // Compiled using g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-11) on CentOS 7-1611
-// using 3.10.0-514.21.2.el7.x86_64 x86_64 and 3.10.0-514.21.2.el7.x86_64 i386.
-
+// using 3.10.0-514.21.2.el7.x86_64 and 3.10.0-514.21.2.el7.centos.plus.i686.
 
 #include <cstddef>
 #include <string>
