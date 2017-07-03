@@ -17,7 +17,7 @@ using namespace std;
 int main()
 {
   std::string s = "Boost Libraries";
-  boost::regex expr(std::string(46341, '.')); // 3,037,000,500 on 64-bit architectures
+  boost::regex expr(std::string(46341, '.')); // force overflow; use 3,037,000,500 on 64-bit architectures
   //boost::regex expr("(\\w+)\\s(\\w+)");
   boost::smatch what;
   if (boost::regex_search(s, what, expr))
