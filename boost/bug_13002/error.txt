@@ -1,0 +1,12 @@
+g++ -ggdb -Wall -Werror -std=c++11 -L/home/bminard/install/lib -I/home/bminard/install/include -o a.out bug_13002.cc
+In file included from /usr/include/c++/4.8.2/iterator:63:0,
+                 from /home/bminard/install/include/boost/next_prior.hpp:15,
+                 from bug_13002.cc:1:
+/usr/include/c++/4.8.2/bits/stl_iterator.h: In instantiation of ‘std::reverse_iterator<_Iterator>& std::reverse_iterator<_Iterator>::operator-=(std::reverse_iterator<_Iterator>::difference_type) [with _Iterator = std::_Rb_tree_const_iterator<int>; std::reverse_iterator<_Iterator>::difference_type = long int]’:
+/home/bminard/install/include/boost/next_prior.hpp:138:11:   required from ‘static T boost::next_prior_detail::prior_impl1<T, Distance, true>::call(T, Distance) [with T = std::reverse_iterator<std::_Rb_tree_const_iterator<int> >; Distance = int]’
+/home/bminard/install/include/boost/next_prior.hpp:160:68:   required from ‘T boost::prior(T, Distance) [with T = std::reverse_iterator<std::_Rb_tree_const_iterator<int> >; Distance = int]’
+bug_13002.cc:7:36:   required from here
+/usr/include/c++/4.8.2/bits/stl_iterator.h:265:10: error: no match for ‘operator+=’ (operand types are ‘std::_Rb_tree_const_iterator<int>’ and ‘std::reverse_iterator<std::_Rb_tree_const_iterator<int> >::difference_type {aka long int}’)
+  current += __n;
+          ^
+make: *** [a.out] Error 1
