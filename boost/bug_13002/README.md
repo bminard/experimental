@@ -1,4 +1,4 @@
-# Bug #13002 boost::prior does not compile when used with std::set reverse_iterator
+# Bung #13002 boost::prior does not compile when used with std::set reverse_iterator
 
 ## To Do's
 
@@ -22,7 +22,7 @@ Variances over bug report text:
     line and line position) as the messages in the ticket.
 
 The [std::reverse_iterator](http://en.cppreference.com/w/cpp/iterator/reverse_iterator)
-provides the =rbegin()= method used in the reproducer.
+provides the `rbegin()` method used in the reproducer.
 
 Compiler error (generated with 4.8.2):
 
@@ -55,7 +55,7 @@ make: *** [a.out] Error 1
 
 ## Observations
 
-  * The forward iterator, using the =begin()= method compiles without any compiler messages.
+  * The forward iterator, using the `begin()` method compiles without any compiler messages.
 
   * The preprocessor produces identical include files for the forward and reverse iterators.
 
