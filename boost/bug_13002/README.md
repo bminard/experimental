@@ -45,3 +45,40 @@ The C++ language standard requires a random access iterator to support the
 expression `r += n`. See [random.access.iterators](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296.pdf).
 
 std::sets is an associative container. Associative containers support bidirectional iterators. They do not support random access iterators. [associative.reqmts](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296.pdf).
+
+## Observations
+
+  * The forward iterator, using the `begin()` method compiles without any compiler messages.
+
+  * The preprocessor produces identical include files for the forward and reverse iterators.
+
+  * Utility test cases exist for forward iterators on std::lists and std::vector
+    (both sequence containers). Reproducer uses std::set (an associative container).
+
+    Only std::vector passes the reproducer.
+
+## Relevant Source Files
+
+Last commit 651a869d4f9479dd3dfdd0293305a60b8c8d0e1c. Introduces support for integral distances and tests.
+
+  * `include/boost/next_prior.hpp` (modified to support distance parameters)
+  * `test/next_prior_test.cpp` (introduced to test above)
+
+## References
+
+Boost Devel mailing list discussions:
+
+  - Andrey Semashev, Daryle Walker, and David Abrahams
+
+  - [[boost] [utility] prior(it, n) for n being an unsigned type](https://lists.boost.org/Archives/boost/2014/06/214788.php)
+  - [[boost] Re: Patch for next() and prior()](https://lists.boost.org/Archives/boost/2003/12/58074.php)
+
+Documentation:
++The C++ language standard requires a random access iterator to support the
++expression `r += n`. See [random.access.iterators].
+ 
+  - [Header boost/utility.hpp](http://www.boost.org/doc/libs/1_64_0/libs/utility/utility.htm)
+  - [Function templates next() and prior()](http://www.boost.org/doc/libs/1_64_0/libs/utility/utility.htm#functions_next_prior)
+  - [Bug #13002 boost::prior does not compile when used with std::set reverse_iterator](https://svn.boost.org/trac10/ticket/13002)
+  - [Working Draft, Standard for Programming Language C++, N4296](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296.pdf)
+
