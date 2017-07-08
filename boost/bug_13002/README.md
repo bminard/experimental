@@ -42,6 +42,6 @@ make: *** [a.out] Error 1
 ```
 
 The C++ language standard requires a random access iterator to support the
-expression `r += n`. See [random.access.iterators].
+expression `r += n`. See [random.access.iterators](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296.pdf).
 
-std::sets support bidirectional iterators. They do not support random access iterators.
+std::sets is an associative container. Associative containers support bidirectional iterators. They do not support random access iterators. [associative.reqmts](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296.pdf).
