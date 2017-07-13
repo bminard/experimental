@@ -34,6 +34,8 @@ boost::variant< bool, string> v6(string("11"));
 cout << "v6 (2 elements): " << v6.type().name() << endl;
 ```
 
+Further testing shows that the problem is tied to the bool. Template argument ordering is irrelevant.
+
 ## References
 
 ### Tickets
