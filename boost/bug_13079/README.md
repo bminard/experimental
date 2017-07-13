@@ -22,9 +22,10 @@ Searched for description containing boost::variant. One unassigned ticket: 13079
 Variances from ticket description.
 
   1. Execute reproducer.
+  
   2. Simplify reproducer.
   
-    Two element templates produce the same result as the original reproducer. For example:
+  Two element templates produce the same result as the original reproducer. For example:
 
 ```
 boost::variant< bool, string> v5("11");
