@@ -38,7 +38,7 @@ cout << "v6 (2 elements): " << v6.type().name() << endl;
 
 ### Tickets
 
-[Ticket 13079](https://svn.boost.org/trac10/ticket/13079)
+  - [Ticket 13079](https://svn.boost.org/trac10/ticket/13079)
 
 ### Module Documentation
 
