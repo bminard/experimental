@@ -11,6 +11,11 @@ boost
 
 Contains code used to explore the `Boost C++ Library`_.
 
+category analysis
++++++++++++++++++
+
+Contains code used to explore a set of random defect severities.
+
 reviewboard
 +++++++++++
 
