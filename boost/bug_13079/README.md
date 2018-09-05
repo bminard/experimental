@@ -22,12 +22,25 @@ Searched for description containing boost::variant. One unassigned ticket: 13079
 Variances from ticket description.
 
   1. Execute reproducer.
+  
+  2. Simplify reproducer.
+  
+  Two element templates produce the same result as the original reproducer. For example:
+
+```
+boost::variant< bool, string> v5("11");
+cout << "v5 (2 elements): " << v5.type().name()<<endl;
+boost::variant< bool, string> v6(string("11"));
+cout << "v6 (2 elements): " << v6.type().name() << endl;
+```
+
+Further testing shows that the problem is tied to the bool. Template argument ordering is irrelevant.
 
 ## References
 
 ### Tickets
 
-[Ticket 13079](https://svn.boost.org/trac10/ticket/13079)
+  - [Ticket 13079](https://svn.boost.org/trac10/ticket/13079)
 
 ### Module Documentation
 
