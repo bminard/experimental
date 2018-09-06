@@ -13,10 +13,10 @@ The graphs:
 
 ![Observed vs Expected R2](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_2.png)
 
-![Observed vs Expected R3](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_3.jpg)
+![Observed vs Expected R3](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_3.png)
 
-![Box Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_4.jpg "Box Plot")
-![Stacked Bar Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_5.jpg "Stacked Bar Plot")
-![Area Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_6.jpg "Area Plot")
-![Line Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_7.jpg "Line Plot")
-![Line Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_8.jpg "Line Plot")
+![Box Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_4.png)
+![Stacked Bar Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_5.png)
+![Area Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_6.png)
+![Line Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_7.png)
+![Line Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_8.png)
