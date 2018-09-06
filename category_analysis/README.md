@@ -10,8 +10,11 @@ Most of the analysis ends up being in the collection of graphs produced.
 The graphs:
 
 ![Observed vs Expected R1](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_1.png)
+
 ![Observed vs Expected R2](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_2.jpg)
-![Observed vs Expected R3](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_3.jpg "Observed vs Expected R3")
+
+![Observed vs Expected R3](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_3.jpg)
+
 ![Box Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_4.jpg "Box Plot")
 ![Stacked Bar Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_5.jpg "Stacked Bar Plot")
 ![Area Plot](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_6.jpg "Area Plot")
