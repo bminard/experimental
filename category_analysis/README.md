@@ -11,7 +11,7 @@ The graphs:
 
 ![Observed vs Expected R1](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_1.png)
 
-![Observed vs Expected R2](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_2.jpg)
+![Observed vs Expected R2](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_2.png)
 
 ![Observed vs Expected R3](https://github.com/bminard/experimental/blob/master/category_analysis/Figure_3.jpg)
 
