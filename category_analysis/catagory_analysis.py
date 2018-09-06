@@ -38,7 +38,7 @@ import sys
 
 
 observed = pd.DataFrame.from_dict( data = { 'R1': [ 23, 27, 41, 25, 44 ],
-                           'R2': [ 44, 49,  7, 28, 19 ] }, orient = 'index',
+                           'R2': [ 44, 49,  7, 28, 19 ], 'R3.: [ 95,  6, 53, 79, 20 ] }, orient = 'index',
                            columns = [ 'Blocking', 'Critical', 'Major', 'Minor', 'Inconsequential' ])
 observed.index.name = 'Release'
 print('Assumes severity is an ordinal with ordering: {}.'.format(' >'.join(observed.columns.values)))
