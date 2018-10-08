@@ -1,6 +1,6 @@
 # Category Analysis
 
-This is an ugly piece of code that I used to experiment with on some categorical data.
+This is an ugly piece of code that I used to experiment on some categorical data.
 
 The data set is 3 rows of 5 random values mapped to a hypothetical defect severity scale.
 The scale is ordinal.
