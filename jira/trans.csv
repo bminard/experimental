@@ -1,0 +1,61 @@
+Issue Type,Issue key,Issue id,Summary,Assignee,Reporter,Priority,Status,Resolution,Created,Updated,Votes
+Bug,TRANS-2553,917236,Approval step called Declined in French is spelled wrong,,bpicarelli,Low,Open,,23/Jan/2018 5:09 PM,11/Apr/2018 7:27 AM,1
+Bug,TRANS-2552,957153,Russian Language Encoding Issue,,dkoh,Low,Open,,10/Apr/2018 1:32 PM,10/Apr/2018 1:50 PM,0
+Bug,TRANS-2548,950289,Some Japanese translations are degraded in Jira Core 7.8,,yokamoto,Low,Resolved,Fixed,26/Mar/2018 2:46 AM,09/Apr/2018 7:13 AM,0
+Bug,TRANS-2547,950048,Misuse of word in the backup page for crowd.,,lng@atlassian.com,Low,Open,,23/Mar/2018 1:55 PM,25/Mar/2018 9:03 AM,0
+Bug,TRANS-2545,947759,"3 different words for ""favorites"" in France",,mkhairuliana,Low,Open,,15/Mar/2018 12:40 PM,22/Mar/2018 1:32 PM,0
+Bug,TRANS-2544,947515,&nbsp; is not rendered as space in some German and French strings,kkolonko,pdrygas,Low,Resolved,Fixed,14/Mar/2018 10:33 AM,28/Mar/2018 2:53 PM,0
+Bug,TRANS-2540,944337,Danish Translating issue,,dkoh,Low,Open,,05/Mar/2018 3:26 PM,10/Apr/2018 6:51 PM,0
+Bug,TRANS-2539,944005,"System Administrator wrongly Translated as ""Użytkownicy JIRA"" (JIRA Users) in Polish",,nverma@atlassian.com,Low,Open,,05/Mar/2018 11:27 AM,12/Mar/2018 8:06 PM,1
+Bug,TRANS-2538,940835,Dashboard (Nástěnky) is containing HTML tags in the Czech translation,,michin,Medium,Resolved,Fixed,26/Feb/2018 1:56 PM,29/Mar/2018 3:00 PM,2
+Bug,TRANS-2537,940365,"Incorrect Swedish Translation Project ""Komponent"" and Story ""Berättelse""",kkolonko,dkoh,Low,Resolved,Fixed,26/Feb/2018 1:27 PM,26/Mar/2018 1:26 PM,5
+Bug,TRANS-2533,935641,"Garbled translations for deleted pages in Confluence, for Russian language",ykozarevska,mkhairuliana,Low,Resolved,Fixed,16/Feb/2018 8:10 AM,25/Feb/2018 9:34 AM,0
+Bug,TRANS-2532,933127,"Standard fields value ""Keine"" changed to ""Keiner"" in German localization",kkolonko,mfilipan,Low,Resolved,Fixed,13/Feb/2018 11:29 AM,11/Apr/2018 7:27 AM,4
+Bug,TRANS-2531,933137,A number of German translations are misleading in JIRA 7.7.1,kkolonko,mfilipan,High,Open,,13/Feb/2018 12:07 PM,11/Apr/2018 7:27 AM,10
+Bug,TRANS-2526,927870,"Header ""Startseite"" appears broken in JIRA 7.7.1 using German as default language",kkolonko,imazuki,Low,Resolved,Fixed,05/Feb/2018 9:42 AM,26/Mar/2018 10:26 AM,1
+Bug,TRANS-2525,927495,Incorrect encoding in French translation of email for invitation for Collaborative editing feature.,ykozarevska,gpaunovic,Low,In Progress,,02/Feb/2018 2:07 PM,05/Feb/2018 8:36 AM,2
+Bug,TRANS-2524,923249,Slovak translation of Project includes HTML code,kkolonko,smackie@atlassian.com,Low,Resolved,Fixed,29/Jan/2018 2:10 PM,26/Mar/2018 8:48 AM,4
+Bug,TRANS-2523,915990,Korean translation mistake for TO in Team Calendar ,,btan@atlassian.com,Low,Open,,22/Jan/2018 11:02 PM,08/Feb/2018 1:56 AM,1
+Bug,TRANS-2522,856506,Czech translation is incomplete in Service Desk,ykozarevska,rchiquete,Low,In Progress,,11/Oct/2017 3:25 PM,11/Apr/2018 7:27 AM,1
+Bug,TRANS-2521,882968,Not able to download the Dutch (Nederlands) Belgium (België) language pack from translations.atlassian.com,,lsaw@atlassian.com,Low,Resolved,Fixed,13/Nov/2017 9:02 AM,11/Apr/2018 7:27 AM,1
+Bug,TRANS-2520,914873,"Translation for option ""Priority Schemes"" is incorrect in several languages",kkolonko,rchiquete,Low,Resolved,Fixed,19/Jan/2018 10:48 AM,26/Mar/2018 8:53 AM,1
+Bug,TRANS-2519,911975,Imported translation encoding,dradovskii,jgiacoppo,High,Open,,16/Jan/2018 2:54 AM,09/Mar/2018 12:47 AM,0
+Bug,TRANS-2512,891788,"Garbled translations of JIRA links in Confluence, for Russian language",ykozarevska,mkhairuliana,Low,Resolved,Fixed,01/Dec/2017 11:35 AM,16/Jan/2018 2:25 PM,3
+Bug,TRANS-2511,891342,Icelandic and Estonian imports are not successful,ykozarevska,mtran@atlassian.com,High,Resolved,Fixed,29/Nov/2017 10:57 PM,01/Dec/2017 10:50 AM,0
+Bug,TRANS-2492,871695,"All ""JIRA"" strings were overwritten to ""Jira"" in the TAC's db which messed up JIRA Server translations",ykozarevska,pfarid,Highest,Resolved,Fixed,20/Oct/2017 8:42 AM,26/Mar/2018 8:56 AM,0
+Bug,TRANS-2476,849175,Language packs falsely showing as bundled on translations.atlassian.com,ykozarevska,smackie@atlassian.com,Low,Resolved,Fixed,25/Sep/2017 10:31 AM,24/Jan/2018 9:12 AM,4
+Bug,TRANS-2475,852583,Instructions to install translations are outdated for Jira,ykozarevska,aheinzer,Low,Resolved,Fixed,02/Oct/2017 5:05 PM,10/Oct/2017 9:10 AM,0
+Bug,TRANS-2474,851566,Some i18n keys are missing in the latest language pack of Jira Cloud,ykozarevska,kshekhar,Highest,Closed,,29/Sep/2017 2:06 AM,19/Dec/2017 12:25 AM,0
+Bug,TRANS-2459,836519,Validation error - whereismycf.inspection.securitylevel.problem.nopermission,ykozarevska,afigas,High,Resolved,Fixed,28/Aug/2017 12:21 PM,10/Sep/2017 8:18 AM,0
+Bug,TRANS-2439,820274,Some keys do not appear in the language packs,dradovskii,kshekhar,Medium,Resolved,Fixed,18/Jul/2017 7:05 AM,06/Sep/2017 11:51 AM,3
+Bug,TRANS-2433,816130,"""Request entity too large"" nginx error while uploading 700kB file",ykozarevska,afigas,High,Resolved,Fixed,06/Jul/2017 7:13 PM,03/Aug/2017 12:25 PM,0
+Bug,TRANS-2430,815081,Not able to download the language packs for certain languages from translations.atlassian.com,lng@atlassian.com,lng@atlassian.com,Low,Resolved,Fixed,03/Jul/2017 10:24 AM,06/Dec/2017 9:36 AM,3
+Bug,TRANS-2429,815063,False validation errors for Czech,ykozarevska,afigas,High,Resolved,Answered,03/Jul/2017 6:36 AM,28/Feb/2018 5:14 PM,1
+Bug,TRANS-2415,811863,Error on import of new languages for JSD Server,ykozarevska,shaffenden,Highest,Resolved,Fixed,21/Jun/2017 4:34 AM,26/Jun/2017 1:32 AM,0
+Bug,TRANS-2364,795605,Apostrophe creates problem on validation,plaptii,afigas,Highest,Resolved,Fixed,19/Apr/2017 10:52 AM,26/Jun/2017 1:32 AM,0
+Bug,TRANS-2358,793401,It's impossible to update translations for some projects because of error 504.,ykozarevska,akhudavets,High,Resolved,Fixed,10/Apr/2017 7:55 AM,26/Jun/2017 1:32 AM,0
+Bug,TRANS-2340,665774,Encoding issue with umulaut character in JIRA's built-in German Language pack,,takindele,Low,Resolved,Won't Fix,14/Feb/2017 9:25 AM,20/Dec/2017 2:12 PM,1
+Bug,TRANS-2331,651901,JIRA gadget title showing question marks (??) after translating to Chinese Language Pack,,cchan,Low,Resolved,Won't Fix,08/Dec/2016 4:00 AM,19/Dec/2017 7:38 AM,7
+Bug,TRANS-2320,641548,Accepted translation not reflected in the latest language pack,,msayed,Low,Resolved,Won't Fix,25/Oct/2016 1:33 PM,19/Dec/2017 7:38 AM,3
+Bug,TRANS-2319,640956,"""Macro to format blocks of source-code or XML"" in Code Block Macro still appears in English inside German/Deutsch translations",,mkhairuliana,Low,Resolved,Won't Fix,21/Oct/2016 3:10 PM,19/Dec/2017 7:38 AM,2
+Bug,TRANS-2315,636105,"""Search arhived spaces"" checkbox still in English inside Spanish translation",,ashaleev,Low,Resolved,Won't Fix,03/Oct/2016 10:39 AM,19/Dec/2017 7:38 AM,1
+Bug,TRANS-2309,629286,The Dashboard name is not translated to German.,,mngangom,Low,Resolved,Won't Fix,13/Sep/2016 9:25 AM,19/Dec/2017 7:38 AM,1
+Bug,TRANS-2291,620781,"Original messages shared across ""Service Desk"" and ""JIRA Service Desk"" does not display bundled plugin name",,jjaroczynski,Low,Resolved,Won't Fix,04/Aug/2016 12:40 PM,19/Dec/2017 7:38 AM,0
+Bug,TRANS-2261,611886,Components page is empty with IPT 1.0,,klopacinski,Low,Resolved,Won't Fix,27/Jun/2016 12:34 PM,19/Dec/2017 7:38 AM,2
+Bug,TRANS-2162,604734,Move TAC CI plans out of devtools-bamboo,klopacinski,jjaroczynski,High,Resolved,Done,30/May/2016 8:12 AM,10/Aug/2016 11:18 AM,0
+Bug,TRANS-2150,602353,InProduct Translation for Confluence 1.1.1 unable to install with Confluence 5.9.9/5.9.11,jgiacoppo,rs1,Highest,Resolved,Fixed,21/May/2016 9:15 AM,10/Aug/2016 11:18 AM,2
+Bug,TRANS-2131,598431,New versions of JIRA-Software isnt appering in Português do Brasil,,eu465430658,High,Resolved,Invalid,12/May/2016 12:45 AM,26/Dec/2017 11:09 AM,1
+Bug,TRANS-2112,596605,TAC footer has 2015 copyright year,dradovskii,ttadej,Low,Resolved,Fixed,05/May/2016 8:17 PM,29/Aug/2017 4:14 AM,0
+Bug,TRANS-2102,594747,Some issue types are unavailable due to incompatible field configuration and/or workflow associations.,,sagarlohar24365723121810,Low,Resolved,Incomplete,28/Apr/2016 7:56 AM,19/Sep/2017 7:13 PM,0
+Bug,TRANS-2059,588599,Link from Dashboard does not show translation items.,,leechangjoon@namsong.co.kr,Low,Resolved,Won't Fix,07/Apr/2016 3:30 AM,19/Dec/2017 7:38 AM,0
+Bug,TRANS-2055,587364,remote-api cannot authenticate against Atlassian ID,jjaroczynski,jjaroczynski,Highest,Resolved,Fixed,04/Apr/2016 8:54 AM,09/May/2016 1:22 PM,0
+Bug,TRANS-2031,584992,Possible Incorrect translation key,,leechangjoon@namsong.co.kr,Low,Resolved,Answered,25/Mar/2016 1:25 PM,07/Apr/2016 11:00 AM,0
+Bug,TRANS-2009,581562,Language pack deployment returns status for last pack ,,jjaroczynski,Low,Resolved,Won't Fix,14/Mar/2016 3:32 PM,19/Dec/2017 7:38 AM,0
+Bug,TRANS-1985,579255,Make InProduct Translation plugin work for Confluence 5.9,ykozarevska,rs1,High,Resolved,Fixed,07/Mar/2016 12:30 PM,15/Jun/2017 8:12 AM,0
+Bug,TRANS-1981,578927,Can't deploy language pack to maven,,hoaphan,High,Resolved,Duplicate,05/Mar/2016 4:45 PM,07/Apr/2016 11:00 AM,0
+Bug,TRANS-1942,574789,"Deleting translation does not work, ""Invalid XSRF token"" error",jjaroczynski,rstocker,Low,Resolved,Fixed,22/Feb/2016 11:59 PM,01/Mar/2016 3:35 PM,0
+Bug,TRANS-1929,573337,Save transalation fails with http 500 for 'aa{ - both UI and language pack import,jjaroczynski,jjaroczynski,Medium,Resolved,Fixed,18/Feb/2016 1:42 PM,07/Apr/2016 11:00 AM,0
+Bug,TRANS-1898,569084,Grails-3: Some characters are encoded on product import popup,jjaroczynski,jjaroczynski,Low,Resolved,Fixed,05/Feb/2016 3:00 PM,01/Mar/2017 10:51 PM,0
+Bug,TRANS-1871,565605,functionality issue,,b.vijaypaudel615794149,Medium,Resolved,Incomplete,25/Jan/2016 5:15 AM,26/Jan/2016 1:20 PM,0
+Bug,TRANS-1862,565015,New accepted translation for TAC is not displayed in UI,klopacinski,jjaroczynski,Low,Resolved,Fixed,21/Jan/2016 9:45 AM,01/Mar/2016 3:35 PM,0
+Bug,TRANS-1759,556920,Several UI issues on translation listing page in DEV env,klopacinski,jjaroczynski,Medium,Resolved,Fixed,17/Dec/2015 11:03 AM,01/Mar/2016 3:35 PM,0
